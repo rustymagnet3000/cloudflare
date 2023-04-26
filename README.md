@@ -10,4 +10,6 @@ export https_proxy=127.0.0.1:8081 && terraform plan
 
 ## Gotchas
 
-If you set `$CLOUDFLARE_API_TOKEN` it overrides any local var setting.
+- Check-in your `terrform.tfstate` in error, you have just compromised the secret `Cloudflare API Token`.
+
+- Set `$CLOUDFLARE_API_TOKEN` it overrides any local var setting.
