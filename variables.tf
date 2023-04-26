@@ -9,6 +9,7 @@ variable "rm_cloudflare_account_id" {
   type    = string
   default = ""
 }
+
 # env variable: TF_VAR_rm_cloudflare_token
 variable "rm_cloudflare_token" {
   description = "Cloudflare API Token"
