@@ -2,11 +2,21 @@
 
 Cloudflare for personal website.
 
+## Authenticate to Cloudflare
+
+Cloudflare advises to use less privileged, short-lived, `API Tokens` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). This repo now sets two environment variables that are used extensively:
+
+-`CLOUDFLARE_API_TOKEN` ( required for every request sent to Cloudflare )
+-`CLOUDFLARE_ACCOUNT_ID` ( required for some API calls to Cloudflare )
+
+
+
 ## Debug Cloudflare API requests from Terraform
 
 ```bash
 export https_proxy=127.0.0.1:8081 && terraform plan
 ```
+
 
 ## Gotchas
 
@@ -37,11 +47,15 @@ The state is out of sync.  To get it back in sync:
 cf-terraforming import --resource-type "cloudflare_access_rule" --token $CF_TOKEN --account $CF_ACCOUNT_ID
 ```
 
-Then just make sure you import it to the correct place.  In my case, it was a Module:
+Then just make sure you import it to the correct place.  In my case, I needed to `import` the rule into a `module` called `access_rules`:
 
 ```bash
 terraform import module.access_rules.cloudflare_access_rule.foobar account/yy/xxxx
 ```
+
+### Import vs state move
+`terraform state mv`
+
 
 ### Import multiple Resources with same name
 
