@@ -9,14 +9,11 @@ Cloudflare advises to use less privileged, short-lived, `API Tokens` instead of 
 -`CLOUDFLARE_API_TOKEN` ( required for every request sent to Cloudflare )
 -`CLOUDFLARE_ACCOUNT_ID` ( required for some API calls to Cloudflare )
 
-
-
 ## Debug Cloudflare API requests from Terraform
 
 ```bash
 export https_proxy=127.0.0.1:8081 && terraform plan
 ```
-
 
 ## Gotchas
 
