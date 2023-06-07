@@ -1,6 +1,6 @@
 resource "cloudflare_access_rule" "challenge_anzac" {
   account_id = var.cloudflare_account_id
-  notes      = "Challenge Australians and New Zealanders who like cricket :)"
+  notes      = "Challenge ${element(var.countries_naughty_list, count.index)}"
   mode       = "managed_challenge"
   count      = length(var.countries_naughty_list)
 
@@ -10,7 +10,4 @@ resource "cloudflare_access_rule" "challenge_anzac" {
   }
 }
 
-variable "countries_naughty_list" {
-  type    = list(string)
-  default = ["AU", "NZ"]
-}
+
