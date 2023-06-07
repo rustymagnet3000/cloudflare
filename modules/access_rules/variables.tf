@@ -10,3 +10,8 @@ variable "cloudflare_account_id" {
   type    = string
   default = ""
 }
+
+variable "countries_naughty_list" {
+  type    = list(string)
+  default = ["AU", "NZ"]
+}
