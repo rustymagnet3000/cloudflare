@@ -3,4 +3,6 @@ output "ar_cf_token" {
   value = var.cloudflare_token
 }
 
-
+output "ar_home_ip_address_to_whitelist" {
+  value = var.home_ip_address
+}

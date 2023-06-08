@@ -15,3 +15,10 @@ variable "countries_naughty_map" {
   type    = map(any)
   default = {}
 }
+
+variable "home_ip_address" {
+  description = "Home IP address"
+
+  type    = string
+  default = ""
+}

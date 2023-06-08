@@ -19,3 +19,8 @@ output "naughty_list_count" {
 output "child_cloudflare_token_access_rules" {
   value = module.access_rules.ar_cf_token
 }
+
+output "home_ip" {
+  value = "Home IP to whitelist ${module.access_rules.ar_home_ip_address_to_whitelist}"
+  sensitive   = false
+}
