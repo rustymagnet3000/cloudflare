@@ -1,13 +1,11 @@
 resource "cloudflare_access_rule" "challenge_anzac" {
   account_id = var.cloudflare_account_id
-  notes      = "Challenge ${element(var.countries_naughty_list, count.index)}"
+  for_each   = var.countries_naughty_map
+  notes      = "Challenge ${each.key} with country code ${each.value}"
   mode       = "managed_challenge"
-  count      = length(var.countries_naughty_list)
 
   configuration {
     target = "country"
-    value  = element(var.countries_naughty_list, count.index)
+    value  = each.value
   }
 }
-
-

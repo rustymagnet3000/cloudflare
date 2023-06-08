@@ -63,7 +63,7 @@ terraform import module.access_rules.cloudflare_access_rule.foobar account/yy/xx
 resource "cloudflare_access_rule" "challenge_anzac" {
     ...
     ...
-variable "countries_naughty_list" {
+variable "countries_naughty_map" {
   type    = list(string)
   default = ["AU", "NZ"]
 }
