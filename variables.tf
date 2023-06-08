@@ -31,5 +31,15 @@ variable "countries_naughty_map" {
   default = {
     "Aussies" = "AU"
     "Kiwis" = "NZ"
+    "Russia" = "RU"
   }
+}
+
+
+# env variable: TF_VAR_rm_home_ip_address
+variable "rm_home_ip_address" {
+  description = "Home IP address"
+
+  type    = string
+  default = ""
 }
