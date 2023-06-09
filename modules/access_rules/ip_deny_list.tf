@@ -1,23 +1,18 @@
-
-resource "cloudflare_list" "ip_deny_list" {
-  account_id  = var.cloudflare_account_id
-  for_each    = var.ips_to_deny
-  name        = "ip_deny_list"
-  description = "example IPs for a list"
-  kind        = "ip"
-
-  item {
-    value {
-      ip = each.value
-    }
-    comment = each.key
+resource "cloudflare_access_rule" "ip_blacklist" {
+  account_id = var.cloudflare_account_id
+  for_each   = var.ips_to_deny
+  notes      = "Block: ${each.key} at ${each.value}"
+  mode       = "block"
+  configuration {
+    target = "ip"
+    value  = each.value
   }
 }
-
 
 variable "ips_to_deny" {
   type = map(string)
   default = {
-    "dummy ip to deny" = "192.0.2.1"
+    "kinsta IP to block" = "103.5.140.141"
+    "dummy blocked IP" = "192.168.0.1"
   }
 }

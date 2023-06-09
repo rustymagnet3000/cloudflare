@@ -27,7 +27,7 @@ variable "rm_cloudflare_token" {
 }
 
 variable "countries_naughty_map" {
-  type    = map
+  type    = map(any)
   default = {
     "Aussies" = "AU"
     "Kiwis" = "NZ"
