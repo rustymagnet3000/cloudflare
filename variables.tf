@@ -1,6 +1,7 @@
-variable "domain" {
-  default = "rustymagnet.xyz"
+data "cloudflare_zone" "website" {
+  name = "rustymagnet.xyz"
 }
+
 
 # env variable: TF_VAR_rm_email_for_notifications
 variable "rm_email_for_notifications" {
@@ -43,3 +44,12 @@ variable "rm_home_ip_address" {
   type    = string
   default = ""
 }
+
+
+data "cloudflare_list" "ip_list" {
+  account_id = var.rm_cloudflare_account_id
+  name       = "ip_deny_list"
+}
+
+
+
