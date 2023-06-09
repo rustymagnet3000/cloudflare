@@ -1,3 +1,9 @@
+variable "xyz_zone_id" {
+  description = "Zone ID passed from root Module"
+  type        = string
+  default     = ""
+}
+
 variable "cloudflare_token" {
   description = "Cloudflare API Token for Access Rules"
   type        = string
