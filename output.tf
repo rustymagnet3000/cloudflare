@@ -21,7 +21,7 @@ output "naughty_list_count" {
 }
 
 output "cf_list" {
-  value = [for i, v in data.cloudflare_list.ip_list : "${i}:${v}"]
+  value = "${data.cloudflare_list.ip_list.name} has ${data.cloudflare_list.ip_list.numitems} items"
  
 }
 
@@ -36,7 +36,7 @@ output "home_ip" {
   sensitive   = false
 }
 
-output "ip_deny" {
-  value = "deny ${module.access_rules.ar_ip_deny_list} IP addresses"
-  sensitive   = false
-}
+# output "ip_deny" {
+#   value = "deny ${module.access_rules.ar_ip_deny_list} IP addresses"
+#   sensitive   = false
+# }
