@@ -1,6 +1,3 @@
-
-
-
 resource "cloudflare_list" "foo_list" {
   account_id  = var.cloudflare_account_id
   name        = "foo_list"
@@ -35,6 +32,3 @@ resource "cloudflare_filter" "filter_foo" {
   description = "Filter foo on IP range"
   expression  = "ip.src in $foo_list"
 }
-
-
-
