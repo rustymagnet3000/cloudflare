@@ -8,6 +8,7 @@ data "cloudflare_list" "ip_list" {
 }
 
 
+# env variable: TF_VAR_rm_cloudflare_token removed in favor of CLOUDFLARE_API_TOKEN
 
 # env variable: TF_VAR_rm_email_for_notifications
 variable "rm_email_for_notifications" {
@@ -25,20 +26,12 @@ variable "rm_cloudflare_account_id" {
   default = ""
 }
 
-# env variable: TF_VAR_rm_cloudflare_token
-variable "rm_cloudflare_token" {
-  description = "Cloudflare API Token"
-
-  type    = string
-  default = ""
-}
-
 variable "countries_naughty_map" {
-  type    = map(any)
+  type = map(any)
   default = {
     "Aussies" = "AU"
-    "Kiwis" = "NZ"
-    "Russia" = "RU"
+    "Kiwis"   = "NZ"
+    "Russia"  = "RU"
   }
 }
 
