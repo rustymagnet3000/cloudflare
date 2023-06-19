@@ -6,14 +6,14 @@ resource "cloudflare_list" "foo_list" {
 
   item {
     value {
-      ip = "192.165.78.128/25"
+      ip = "192.168.1.128/25"
     }
     comment = "one"
   }
 
   item {
     value {
-      ip = "192.31.90.160/27"
+      ip = "192.168.0.160/27"
     }
     comment = "two"
   }
