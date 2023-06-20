@@ -2,6 +2,7 @@ data "cloudflare_zone" "website" {
   name = "rustymagnet.xyz"
 }
 
+
 data "cloudflare_list" "ip_list" {
   account_id = var.rm_cloudflare_account_id
   name       = "foo_list"
