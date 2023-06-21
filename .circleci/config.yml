@@ -9,9 +9,14 @@ jobs:
     steps:
       - checkout
       - run:
-          name: check version
+          name: echo Terraform version
           command: |
             terraform version
+
+      - run:
+          name: Terraform fmt to provoke issues
+          command: |
+            terraform fmt .
 
 workflows:
   format_lint_checks:
