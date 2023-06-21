@@ -4,16 +4,17 @@ variable "xyz_zone_id" {
   default     = ""
 }
 
+variable "website" {
+  description = "Name of website from Zone data source in Root module"
+  type        = string
+  default     = ""
+}
+
 variable "cloudflare_account_id" {
   description = "Cloudflare Account ID for Access Rules"
 
   type    = string
   default = ""
-}
-
-variable "countries_naughty_map" {
-  type    = map(any)
-  default = {}
 }
 
 variable "home_ip_address" {
