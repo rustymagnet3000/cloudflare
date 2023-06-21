@@ -19,15 +19,15 @@ output "naughty_list_count" {
 
 output "cf_list" {
   value = "${data.cloudflare_list.ip_list.name} has ${data.cloudflare_list.ip_list.numitems} items"
- 
+
 }
 
 
 # access_rules module
 
 output "home_ip" {
-  value = "Home IP to whitelist ${module.access_rules.ar_home_ip_address_to_whitelist}"
-  sensitive   = false
+  value     = "Home IP to whitelist ${module.access_rules.ar_home_ip_address_to_whitelist}"
+  sensitive = false
 }
 
 # output "ip_deny" {
