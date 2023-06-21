@@ -1,4 +1,19 @@
-version: '2.1'
+version: 2.1
 
-orbs:
-  terraform: devops-workflow/terraform@0.0.1
+
+jobs:
+  check_tf_formatting:
+    docker:
+      - image: cimg/deploy
+   
+    steps:
+      - checkout
+      - run:
+          name: check version
+          command: |
+            terraform version
+
+workflows:
+  format_lint_checks:
+    jobs:
+    - check_tf_formatting
