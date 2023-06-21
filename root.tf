@@ -3,17 +3,17 @@ module "access_rules" {
 
   cloudflare_account_id = var.rm_cloudflare_account_id
   countries_naughty_map = var.countries_naughty_map
-  home_ip_address = var.rm_home_ip_address
-  xyz_zone_id = data.cloudflare_zone.website.id
+  home_ip_address       = var.rm_home_ip_address
+  xyz_zone_id           = data.cloudflare_zone.website.id
 }
 
 module "firewall_rules" {
   source = "./modules/firewall_rules"
 
   cloudflare_account_id = var.rm_cloudflare_account_id
-  countries_naughty_map = var.countries_naughty_map
-  home_ip_address = var.rm_home_ip_address
-  xyz_zone_id = data.cloudflare_zone.website.id
+  home_ip_address       = var.rm_home_ip_address
+  xyz_zone_id           = data.cloudflare_zone.website.id
+  website               = data.cloudflare_zone.website.name
 }
 
 
