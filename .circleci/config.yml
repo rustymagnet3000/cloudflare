@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Terraform fmt to provoke issues
           command: |
-            terraform fmt .
+            terraform fmt . -check
 
 workflows:
   format_lint_checks:
