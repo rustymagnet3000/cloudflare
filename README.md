@@ -2,6 +2,14 @@
 
 Cloudflare for personal website.
 
+## Limitations of free Cloudflare account
+
+```shell
+# bot management fields not allowed
+cf.bot_management.score eq 1
+not cf.bot_management.verified_bot
+```
+
 ## Authenticate to Cloudflare
 
 Cloudflare advises to use less privileged, short-lived, `API Tokens` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). This repo now sets two environment variables that are used extensively:
