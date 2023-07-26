@@ -17,4 +17,16 @@ resource "cloudflare_list" "foo_list" {
     }
     comment = "two"
   }
+  item {
+    value {
+      ip = "192.168.0.1"
+    }
+    comment = "duplicate comment"
+  }
+  item {
+    value {
+      ip = "192.168.0.2"
+    }
+    comment = "duplicate comment"
+  }
 }

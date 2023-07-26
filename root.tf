@@ -16,6 +16,12 @@ module "firewall_rules" {
   website               = data.cloudflare_zone.website.name
 }
 
+module "rate_limits" {
+  source                = "./modules/rate_limits"
+  cloudflare_account_id = var.rm_cloudflare_account_id
+  xyz_zone_id           = data.cloudflare_zone.website.id
+  website               = data.cloudflare_zone.website.name
+}
 
 module "notifications" {
   source                     = "./modules/notifications"

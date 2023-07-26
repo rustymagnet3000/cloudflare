@@ -1,18 +1,22 @@
-resource "cloudflare_firewall_rule" "fw_cookie_presence" {
+resource "cloudflare_ruleset" "my_zone_custom_firewall" {
   zone_id     = var.xyz_zone_id
-  description = "Log if request is missing the foo-cookie"
-  filter_id   = cloudflare_filter.filter_cookie_presence.id
-  # action = "log" not allowed with free account https://developers.cloudflare.com/firewall/
-  action = "managed_challenge"
-}
+  name        = "my_firewall_rules_inside_ruleset"
+  description = "Zone firewall rules"
+  kind        = "zone"
+  phase       = "http_request_firewall_custom"
 
-resource "cloudflare_filter" "filter_cookie_presence" {
-  zone_id     = var.xyz_zone_id
-  description = "Fire if request is missing the foo-cookie"
-  expression  = <<EOF
+  rules {
+    # action = "log" not allowed with free account https://developers.cloudflare.com/firewall/
+    action      = "managed_challenge"
+    expression  = <<EOF
                 (
-                  not any(lower(http.request.headers.names[*])[*] in {"foo-cookie" "bar-cookie"}) 
-                  and http.host eq "${var.website}"
+                    http.host eq "${var.website}"
+                    and (http.request.uri.path contains "/foo/")
+                    and not any(lower(http.request.headers.names[*])[*] 
+                    contains "authorization")
                 )
-                EOF
+    EOF
+    description = "Log requests that don't send auth credentials"
+    enabled     = true
+  }
 }
