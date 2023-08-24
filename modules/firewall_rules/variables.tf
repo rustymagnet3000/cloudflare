@@ -23,3 +23,8 @@ variable "home_ip_address" {
   type    = string
   default = ""
 }
+
+ variable my_markets {
+  type = list(string)
+  default = []
+}

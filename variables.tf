@@ -1,15 +1,13 @@
-data "cloudflare_zone" "website" {
-  name = "rustymagnet.xyz"
-}
-
-
-data "cloudflare_list" "ip_list" {
-  account_id = var.rm_cloudflare_account_id
-  name       = "foo_list"
-}
-
-
 # env variable: TF_VAR_rm_cloudflare_token removed in favor of CLOUDFLARE_API_TOKEN
+
+
+variable "all_zone_names" {
+  type        = list(string)
+  description = "A list of Zones by names. Used as part of data_sources.tf for dynamic zone_id look-up"
+  default = [
+    "rustymagnet.xyz"
+  ]
+}
 
 # env variable: TF_VAR_rm_email_for_notifications
 variable "rm_email_for_notifications" {
@@ -34,6 +32,16 @@ variable "countries_naughty_map" {
     "Kiwis"   = "NZ"
     "Russia"  = "RU"
   }
+}
+
+variable "my_markets" {
+  type = list(string)
+  default = [
+    "\"NZ\"",
+    "\"AU\"",
+    "\"FR\"",
+    "\"GB\"",
+  ]
 }
 
 
