@@ -34,14 +34,14 @@ variable "countries_naughty_map" {
   }
 }
 
- variable my_markets {
+variable "my_markets" {
   type = list(string)
   default = [
     "\"NZ\"",
     "\"AU\"",
     "\"FR\"",
     "\"GB\"",
-    ]
+  ]
 }
 
 
