@@ -1,6 +1,5 @@
 module "access_rules" {
-  source = "./modules/access_rules"
-
+  source                = "./modules/access_rules"
   cloudflare_account_id = var.rm_cloudflare_account_id
   countries_naughty_map = var.countries_naughty_map
   home_ip_address       = var.rm_home_ip_address
@@ -9,6 +8,7 @@ module "access_rules" {
 
 module "firewall_rules" {
   source                = "./modules/firewall_rules"
+  cloudflare_zones_map  = local.cloudflare_zones_map
   my_markets            = var.my_markets
   cloudflare_account_id = var.rm_cloudflare_account_id
   home_ip_address       = var.rm_home_ip_address
