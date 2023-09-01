@@ -1,8 +1,10 @@
 # cloudflare
 
-Cloudflare for personal website.
+Learnings from managing Cloudflare's Web App Firewall via Terraform.
 
-## Limitations of free Cloudflare account
+## Learnings
+
+#### Limitations of free Cloudflare account
 
 ```shell
 # bot management fields not allowed
@@ -10,39 +12,37 @@ cf.bot_management.score eq 1
 not cf.bot_management.verified_bot
 ```
 
-## Authenticate to Cloudflare
+#### Authenticate to Cloudflare
 
-Cloudflare advises to use less privileged, short-lived, `API Tokens` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). This repo now sets two environment variables that are used extensively:
+Use less privileged, short-lived, `API Tokens` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). 
+
+#### Environment variables
+
+To avoid reading in TF_VARs and the spaghetti complexity of sharing thoses with Modules, set:
 
 -`CLOUDFLARE_API_TOKEN` ( required for every request sent to Cloudflare )
 -`CLOUDFLARE_ACCOUNT_ID` ( required for some API calls to Cloudflare )
 
-
-
-## Debug Cloudflare API requests from Terraform
+#### Debug Cloudflare API requests from Terraform
 
 ```bash
 export https_proxy=127.0.0.1:8081 && terraform plan
 ```
 
+#### State file is secret
 
-## Gotchas
+If you check-in the state file, which is default named `terrform.tfstate`, you have just compromised your Cloudflare authentication credentials. Time to rotate those creds !
 
-### State file is secret
-
-Check-in your `terrform.tfstate` in error, you have just compromised the secret `Cloudflare API Token`.
-
-### Careful about overiding authentication creds
+#### Careful about overiding authentication creds
 
 Set `$CLOUDFLARE_API_TOKEN` it overrides any local var setting.
 
 ### State mismatch
 
-If somebody is using the Cloudflare Web UI to add rules, it is easy to get out of sync.  Also, if the machine that runs the `terraform` commands is reset / wipes the local state files, then it will cause things the state to get out of sync,
-This is how I reproduced the issue and fixed it:
+On day 1 you set up Cloudflare and add a bunch of resources.  On day 2 you set up a repo to manage Cloudflare with Terraform.  What happens ?  You need to **import** those rules.  Does that matter ?  Example:
 
-- Create a single Access Rule with Terraform and the CF Provider
-- Delete all the state files
+- Create a `Cloudflare Access Rule` with Terraform
+- Delete the state file
 - `terraform init`
 - `terraform plan` # all looks good
 - `terraform apply`
@@ -61,11 +61,7 @@ Then just make sure you import it to the correct place.  In my case, I needed to
 terraform import module.access_rules.cloudflare_access_rule.foobar account/yy/xxxx
 ```
 
-### Import vs state move
-`terraform state mv`
-
-
-### Import multiple Resources with same name
+#### Import multiple Resources with same name
 
 ```terraform
 resource "cloudflare_access_rule" "challenge_anzac" {
@@ -83,9 +79,7 @@ This means any import needs handling with multiple commands:
 terraform import -state=terraform.tfstate "module.access_rules.cloudflare_access_rule.my_rule[0]" account/<account id>/<rule id>
 ```
 
-### Test state change
-
-To check the state file was changed as expected, these commands were helpful:
+#### Test state change
 
 ```bash
 # remove state

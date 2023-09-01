@@ -1,3 +1,9 @@
+variable "cloudflare_zones_map" {
+  type        = map(string)
+  description = "A map of key/value pairs of domain:zone_id"
+  default     = {}
+}
+
 variable "xyz_zone_id" {
   description = "Zone ID passed from root Module"
   type        = string
