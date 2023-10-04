@@ -4,12 +4,15 @@ Learnings from managing Cloudflare's Web App Firewall via Terraform.
 
 ## Learnings
 
-#### Limitations of free Cloudflare account
+#### Limitations of free Cloudflare tier
 
 ```shell
-# bot management fields not allowed
+# not allowed
 cf.bot_management.score eq 1
 not cf.bot_management.verified_bot
+http.request.method
+http.response.code
+http.host eq "${var.website}"
 ```
 
 #### Authenticate to Cloudflare

@@ -24,7 +24,11 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
       mitigation_timeout  = 10 # free plan has to use 10
     }
     # the following expression can't use HTTP Response Code, http.host or Request Method
-    expression  = "(http.request.uri.path contains \"/foobar\")"
+    expression  = <<EOF
+        (
+            and http.request.uri.path in { ${join(" ", var.paths_to_protect)} }
+        )
+        EOF
     description = "Rate limit requests to ${var.website}"
     enabled     = true
   }
