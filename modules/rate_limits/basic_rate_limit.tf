@@ -1,5 +1,5 @@
 # not Advanced Rate Limit as no counting expression
-
+// free tier limitations https://developers.cloudflare.com/waf/rate-limiting-rules/
 resource "cloudflare_ruleset" "zone_rl_custom_response" {
   zone_id     = var.xyz_zone_id
   name        = "Basic Rate Limit for my zone"
@@ -24,7 +24,11 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
       mitigation_timeout  = 10 # free plan has to use 10
     }
     # the following expression can't use HTTP Response Code, http.host or Request Method
-    expression  = "(http.request.uri.path contains \"/foobar\")"
+    expression  = <<EOF
+        (
+            http.request.uri.path in { ${join(" ", var.paths_to_protect)} }
+        )
+        EOF
     description = "Rate limit requests to ${var.website}"
     enabled     = true
   }
