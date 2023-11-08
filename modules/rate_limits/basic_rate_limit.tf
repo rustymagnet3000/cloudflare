@@ -12,7 +12,7 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
     action_parameters {
       response {
         status_code  = 429
-        content      = "{\"response\": \"block\"}"
+        content      = "{\"response\": \"please slow down\"}"
         content_type = "application/json"
       }
     }
