@@ -54,6 +54,12 @@ output "home_ip" {
   sensitive = false
 }
 
+# rate limit
+output "rl" {
+  value     = module.rate_limits.zone_rate_limit
+  sensitive = false
+}
+
 # output "ip_deny" {
 #   value = "deny ${module.access_rules.ar_ip_deny_list} IP addresses"
 #   sensitive   = false
