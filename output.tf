@@ -7,6 +7,12 @@ output "Plan" {
   value = data.cloudflare_zone.website.plan
 }
 
+# uses formatlist() to format a list with a specific prefix
+output "north_europe_sites" {
+  value     = [for v in local.north_euro_websites : "${v}"]
+  sensitive = false
+}
+
 # useful to see how to get the account ID from a specific Zone Name
 output "account_id" {
   value = data.cloudflare_zones.all_zone_ids["rustymagnet.xyz"].id
@@ -51,6 +57,12 @@ output "in_markets" {
 
 output "home_ip" {
   value     = "Home IP to whitelist ${module.access_rules.ar_home_ip_address_to_whitelist}"
+  sensitive = false
+}
+
+# rate limit
+output "rl" {
+  value     = module.rate_limits.zone_rate_limit
   sensitive = false
 }
 
