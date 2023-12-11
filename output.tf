@@ -7,6 +7,12 @@ output "Plan" {
   value = data.cloudflare_zone.website.plan
 }
 
+# uses formatlist() to format a list with a specific prefix
+output "north_europe_sites" {
+  value     = [for v in local.north_euro_websites : "${v}"]
+  sensitive = false
+}
+
 # useful to see how to get the account ID from a specific Zone Name
 output "account_id" {
   value = data.cloudflare_zones.all_zone_ids["rustymagnet.xyz"].id

@@ -1,23 +1,25 @@
 # cloudflare
 
-Learnings from managing Cloudflare's Web App Firewall via Terraform.
+Managing Cloudflare's Web App Firewall ( WAF ) via Terraform.
 
 ## Learnings
 
 #### Limitations of free Cloudflare tier
 
 ```shell
-## Not allowed
-# bot management
+# No bot management values
 cf.bot_management.score eq 1
 not cf.bot_management.verified_bot
 
-# rich expressions
+# Not Advanced Rate Limits [ as no counting expression allowed ]
+
+# Firewall Filters can't include
 http.request.method
 http.response.code
 http.host eq "${var.website}"
 
 # ddos overrides
+You can still override DDOS rules with the free tier
 ```
 
 #### Authenticate to Cloudflare
