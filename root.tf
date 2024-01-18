@@ -11,6 +11,11 @@ module "ddos" {
   cloudflare_account_id = var.rm_cloudflare_account_id
   xyz_zone_id           = data.cloudflare_zone.website.id
 }
+module "zones" {
+  source                = "./modules/zones"
+  cloudflare_account_id = var.rm_cloudflare_account_id
+  xyz_zone_name         = data.cloudflare_zone.website.name
+}
 
 module "firewall_rules" {
   source                = "./modules/firewall_rules"
