@@ -6,6 +6,11 @@ module "access_rules" {
   xyz_zone_id           = data.cloudflare_zone.website.id
 }
 
+module "transform_rules" {
+  source      = "./modules/transform_rules"
+  xyz_zone_id = data.cloudflare_zone.website.id
+}
+
 module "ddos" {
   source                = "./modules/ddos"
   cloudflare_account_id = var.rm_cloudflare_account_id
