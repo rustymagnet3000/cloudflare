@@ -13,7 +13,7 @@ resource "cloudflare_ruleset" "homepage_to_worker" {
         target_url {
           value = "https://foo.rustymagnet3000.workers.dev/"
         }
-        preserve_query_string = false
+        preserve_query_string = true
       }
     }
     expression  = <<EOF
