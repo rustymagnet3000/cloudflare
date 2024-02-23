@@ -11,7 +11,7 @@ resource "cloudflare_ruleset" "homepage_to_worker" {
       from_value {
         status_code = 301
         target_url {
-          value = "https://foo.rustymagnet3000.workers.dev/"
+          value = "https://foobar.${var.xyz_zone_name}"
         }
         preserve_query_string = true
       }
