@@ -13,14 +13,10 @@ locals {
   ]
 
   north_european_websites = [
-    ".ae",
-    ".be",
-    ".com",
-    ".com.kw",
-    ".com.sg",
-    ".com.qa",
-    ".co.uk",
-    ".fr",
+    ".dk",
+    ".no",
+    ".se",
+    ".nl",
   ]
 
 

@@ -6,6 +6,13 @@ module "access_rules" {
   xyz_zone_id           = data.cloudflare_zone.website.id
 }
 
+module "dns" {
+  source                = "./modules/dns"
+  xyz_zone_id           = data.cloudflare_zone.website.id
+  xyz_zone_name         = data.cloudflare_zone.website.name
+  cloudflare_account_id = var.rm_cloudflare_account_id
+}
+
 module "redirects" {
   source        = "./modules/redirects"
   xyz_zone_name = data.cloudflare_zone.website.name
