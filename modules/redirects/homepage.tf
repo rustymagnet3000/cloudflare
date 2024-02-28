@@ -11,18 +11,18 @@ resource "cloudflare_ruleset" "homepage_to_worker" {
       from_value {
         status_code = 301
         target_url {
-          value = "https://${var.xyz_zone_name}posts/my-first-post/"
+          value = "/posts/my-first-post/"
         }
-        preserve_query_string = true
+        preserve_query_string = false
       }
     }
     expression  = <<EOF
     (
         http.request.method eq "GET"
-        and (http.request.full_uri eq "https://${var.xyz_zone_name}")
+        and (http.request.uri.path eq "/promo/")
     )
     EOF
-    description = "Redirect visitor from ${var.xyz_zone_name} to Cloudflare Worker"
+    description = "Redirect visitor from ${var.xyz_zone_name}/promo/ to Blog Post 1"
     enabled     = true
   }
 }
