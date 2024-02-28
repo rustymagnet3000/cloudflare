@@ -1,7 +1,7 @@
 resource "cloudflare_ruleset" "homepage_to_worker" {
   zone_id     = var.xyz_zone_id
   description = "Redirects ruleset"
-  name        = "redirects from landing page to Blog 1"
+  name        = "redirects from /promo/ to Blog post 1"
   phase       = "http_request_dynamic_redirect"
   kind        = "zone"
 
@@ -11,9 +11,9 @@ resource "cloudflare_ruleset" "homepage_to_worker" {
       from_value {
         status_code = 301
         target_url {
-          value = "/posts/my-first-post/"
+          expression = "concat(\"https://\", http.host, \"/foo\", http.request.uri.path)"
         }
-        preserve_query_string = false
+        preserve_query_string = true
       }
     }
     expression  = <<EOF
