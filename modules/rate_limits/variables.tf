@@ -9,7 +9,7 @@ variable "paths_to_protect" {
   type = list(string)
   default = [
     "\"/login\"",
-     "\"/post\"",
+    "\"/post\"",
   ]
 }
 

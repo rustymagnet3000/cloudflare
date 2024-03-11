@@ -21,4 +21,4 @@ variable "my_alerts" {
     "universal_ssl_event_type",
     "expiring_service_token_alert",
   ]
-}    
+}

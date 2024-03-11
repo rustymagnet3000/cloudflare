@@ -26,7 +26,7 @@ You can still override DDOS rules with the free tier
 
 #### Authenticate to Cloudflare
 
-Use less privileged, short-lived, `API Tokens` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). 
+Use less privileged, short-lived, `API Tokens` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 #### Environment variables
 
