@@ -1,7 +1,7 @@
 resource "cloudflare_ruleset" "homepage_to_worker" {
   zone_id     = var.xyz_zone_id
   description = "Redirects ruleset"
-  name        = "redirects from landing page to Cloudflare Worker"
+  name        = "redirects from /promo/ to Blog post 1"
   phase       = "http_request_dynamic_redirect"
   kind        = "zone"
 
@@ -11,7 +11,7 @@ resource "cloudflare_ruleset" "homepage_to_worker" {
       from_value {
         status_code = 301
         target_url {
-          value = "https://foo.rustymagnet3000.workers.dev/"
+          expression = "concat(\"https://\", http.host, \"/foo\", http.request.uri.path)"
         }
         preserve_query_string = true
       }
@@ -19,10 +19,10 @@ resource "cloudflare_ruleset" "homepage_to_worker" {
     expression  = <<EOF
     (
         http.request.method eq "GET"
-        and (starts_with(http.request.full_uri, "https://${var.xyz_zone_name}"))
+        and (http.request.uri.path eq "/promo/")
     )
     EOF
-    description = "Redirect visitor from ${var.xyz_zone_name} to Cloudflare Worker"
+    description = "Redirect visitor from ${var.xyz_zone_name}/promo/ to Blog Post 1"
     enabled     = true
   }
 }

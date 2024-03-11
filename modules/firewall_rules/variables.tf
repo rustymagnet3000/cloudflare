@@ -30,7 +30,7 @@ variable "home_ip_address" {
   default = ""
 }
 
- variable my_markets {
-  type = list(string)
+variable "my_markets" {
+  type    = list(string)
   default = []
 }
