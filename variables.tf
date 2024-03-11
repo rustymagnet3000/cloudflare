@@ -1,3 +1,8 @@
+variable "image_id" {
+  default = "default"
+}
+
+
 # env variable: TF_VAR_rm_cloudflare_token removed in favor of CLOUDFLARE_API_TOKEN
 
 

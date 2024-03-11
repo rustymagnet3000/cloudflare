@@ -11,8 +11,10 @@ Managing Cloudflare's Web App Firewall ( WAF ) via Terraform.
 cf.bot_management.score eq 1
 not cf.bot_management.verified_bot
 
-# Not Advanced Rate Limits [ as no counting expression allowed ]
-
+# Advanced Rate Limits
+  # no counting expression allowed
+  #  action = "log" not allowed with free zones
+    
 # Firewall Filters can't include
 http.request.method
 http.response.code
