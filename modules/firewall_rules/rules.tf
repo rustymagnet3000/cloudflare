@@ -25,9 +25,22 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
                 (
                     http.request.uri.path contains "/"
                     and (any(http.request.headers["foo"][*] == "bar"))
+
                 )
     EOF
-    description = "Block requests that pass \"foo\" header with \"bar\" as the value"
+    description = "Block requests that pass \"foo=bar\" Header"
+    enabled     = true
+  }
+
+  rules {
+    action      = "block"
+    expression  = <<EOF
+                (
+                    http.request.uri.path contains "/"
+                    and (any(lower(http.request.headers.names[*])[*] == "foo-id"))
+                )
+    EOF
+    description = "Block requests that pass \"foo-id\" Header value, regardless of value"
     enabled     = true
   }
 }
