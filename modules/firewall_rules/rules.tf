@@ -8,6 +8,20 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
   rules {
     action      = "managed_challenge"
     expression  = <<EOF
+    (
+      starts_with(http.host, "foobar")
+      and (http.request.method eq "GET")
+      and (http.request.uri.query ne "")
+      and (http.request.uri.path in { ${join(" ", local.paths_to_protection)} } )
+    )
+    EOF
+    description = "Testing query parameter pollution on a single subdomain"
+    enabled     = true
+  }
+
+  rules {
+    action      = "managed_challenge"
+    expression  = <<EOF
                 (
                     http.request.uri.path contains "/posts/"
                     and not any(lower(http.request.headers.names[*])[*]
