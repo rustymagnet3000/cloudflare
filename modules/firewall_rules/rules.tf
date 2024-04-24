@@ -6,6 +6,18 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
   phase       = "http_request_firewall_custom"
 
   rules {
+    action      = "block"
+    expression = <<EOF
+    (
+      http.request.uri.path.extension in { "php" "jsp" "cgi" }
+    )
+    EOF
+
+     description = "Block any requests with file extensions I don't use"
+    enabled     = true
+  }
+  
+  rules {
     action      = "managed_challenge"
     expression  = <<EOF
     (
