@@ -41,7 +41,7 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
                     http.request.uri.path contains "/posts/"
                     and not any(lower(http.request.headers.names[*])[*]
                     contains "authorization")
-                    and ip.geoip.country in { ${join(" ", var.my_markets)} }
+                    and not ( ip.geoip.country in { ${join(" ", var.my_markets)} } )
                 )
     EOF
     description = "Challenge requests that don't send authorization header from known country"
