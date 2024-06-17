@@ -12,7 +12,21 @@ resource "cloudflare_ruleset" "add_request_headers" {
         operation  = "set"
         expression = "ip.geoip.asnum"
       }
-
+      headers {
+        name       = "foo-country"
+        operation  = "set"
+        expression = "ip.src.country"
+      }
+      headers {
+        name       = "foo-ip"
+        operation  = "set"
+        expression = "ip.src"
+      }
+      headers {
+        name       = "foo-ray-id"
+        operation  = "set"
+        expression = "cf.ray_id"
+      }
     }
     expression  = "true"
     description = "HTTP Request Header Modification Rule"

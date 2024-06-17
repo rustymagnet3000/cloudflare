@@ -5,6 +5,35 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
   kind        = "zone"
   phase       = "http_request_firewall_custom"
 
+  // cool rule: http.request.uri.path.extension in { "php" "jsp" "cgi" } 
+
+  rules {
+    action     = "block"
+    expression = <<EOF
+    (
+      not (http.host contains "foobar")
+      and http.request.uri.path contains "knowhere"
+    )
+    EOF
+
+    description = "Block any requests with file extensions I don't use"
+    enabled     = true
+  }
+
+  rules {
+    action      = "managed_challenge"
+    expression  = <<EOF
+    (
+      starts_with(http.host, "foobar")
+      and (http.request.method eq "GET")
+      and (http.request.uri.query ne "")
+      and (http.request.uri.path in { ${join(" ", local.paths_to_protection)} } )
+    )
+    EOF
+    description = "Testing query parameter pollution on a single subdomain"
+    enabled     = true
+  }
+
   rules {
     action      = "managed_challenge"
     expression  = <<EOF
