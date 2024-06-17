@@ -17,8 +17,5 @@ variable "my_alerts" {
   default = [
     "dos_attack_l7",
     "fbm_dosd_attack",
-    "real_origin_monitoring",
-    "universal_ssl_event_type",
-    "expiring_service_token_alert",
   ]
 }

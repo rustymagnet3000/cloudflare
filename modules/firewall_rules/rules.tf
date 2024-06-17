@@ -5,18 +5,21 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
   kind        = "zone"
   phase       = "http_request_firewall_custom"
 
+  // cool rule: http.request.uri.path.extension in { "php" "jsp" "cgi" } 
+
   rules {
-    action      = "block"
+    action     = "block"
     expression = <<EOF
     (
-      http.request.uri.path.extension in { "php" "jsp" "cgi" }
+      not (http.host contains "foobar")
+      and http.request.uri.path contains "knowhere"
     )
     EOF
 
-     description = "Block any requests with file extensions I don't use"
+    description = "Block any requests with file extensions I don't use"
     enabled     = true
   }
-  
+
   rules {
     action      = "managed_challenge"
     expression  = <<EOF
