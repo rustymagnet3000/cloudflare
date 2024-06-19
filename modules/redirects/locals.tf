@@ -1,6 +1,10 @@
 locals {
-  sites_where_to_place_redirect = [
+  all_subdomains_to_place_redirect = [
     "www",
     "foobar",
+  ]
+
+  phased_rollout = [
+    "www",
   ]
 }
