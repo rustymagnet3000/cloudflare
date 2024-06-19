@@ -19,10 +19,21 @@ not cf.bot_management.verified_bot
 http.request.method
 http.response.code
 http.host eq "${var.website}"
-
-# ddos overrides
-You can still override DDOS rules with the free tier
 ```
+
+#### Good things on free Cloudflare tier
+
+```shell
+# ddos overrides
+Override DDOS rules still allowed in free tier
+
+# Single Redirects
+Up to 10 in free tier allowed
+```
+
+
+```shell
+# No bot management values
 
 #### Authenticate to Cloudflare
 
