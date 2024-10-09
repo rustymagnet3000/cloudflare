@@ -7,7 +7,7 @@ resource "cloudflare_notification_policy" "notifications_to_email" {
   count       = length(var.my_alerts)
 
   email_integration {
-    id = var.su_email_for_notifications
+    id = var.email_for_notifications
   }
 }
 

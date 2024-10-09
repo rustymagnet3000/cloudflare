@@ -1,8 +1,24 @@
 # cloudflare
 
-Managing Cloudflare's Web App Firewall ( WAF ) via Terraform.
+Manage Cloudflare's Web App Firewall ( WAF ) with Terraform.
 
-## Learnings
+#### Authenticate to Cloudflare
+
+Use a less privileged, short-lived, `API Token` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+
+
+```shell
+
+# required for every request sent to Cloudflare
+# Terraform will pick up the API Token from here 
+export CLOUDFLARE_API_TOKEN="< token >"
+
+# The Account ID is used in "Account Level" calls to Cloudflare
+export CLOUDFLARE_ACCOUNT_ID="abcd"
+
+# to pass the Account ID into variables
+export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
+```
 
 #### Limitations of free Cloudflare tier
 
@@ -12,9 +28,10 @@ cf.bot_management.score eq 1
 not cf.bot_management.verified_bot
 
 # Advanced Rate Limits
-  # no counting expression allowed
-  #  action = "log" not allowed with free zones
-    
+no counting expression allowed
+action = "log" not allowed with free zones
+"log" with a an Action Response block not allowed ( as "log" overrides the response block )
+
 # Firewall Filters can't include
 http.request.method
 http.response.code
@@ -24,20 +41,10 @@ http.host eq "${var.website}"
 You can still override DDOS rules with the free tier
 ```
 
-#### Authenticate to Cloudflare
-
-Use less privileged, short-lived, `API Tokens` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
-
-#### Environment variables
-
-To avoid reading in TF_VARs and the spaghetti complexity of sharing thoses with Modules, set:
-
--`CLOUDFLARE_API_TOKEN` ( required for every request sent to Cloudflare )
--`CLOUDFLARE_ACCOUNT_ID` ( required for some API calls to Cloudflare )
-
 #### Debug Cloudflare API requests from Terraform
 
 ```bash
+# Add the certificate to KeyChain "trust"
 export https_proxy=127.0.0.1:8081 && terraform plan
 ```
 
@@ -64,7 +71,9 @@ On day 1 you set up Cloudflare and add a bunch of resources.  On day 2 you set u
 The state is out of sync.  To get it back in sync:
 
 ```bash
-cf-terraforming import --resource-type "cloudflare_access_rule" --token $CF_TOKEN --account $CF_ACCOUNT_ID
+cf-terraforming import \
+  --resource-type "cloudflare_access_rule" \
+  --token $CF_TOKEN --account $CF_ACCOUNT_ID
 ```
 
 Then just make sure you import it to the correct place.  In my case, I needed to `import` the rule into a `module` called `access_rules`:
