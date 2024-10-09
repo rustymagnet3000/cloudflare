@@ -20,6 +20,16 @@ export CLOUDFLARE_ACCOUNT_ID="abcd"
 export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
 ```
 
+#### Debug Cloudflare API requests from Terraform
+
+Almost all issues I experienced related to using the wrong `CLOUDFLARE_API_TOKEN` when making change via Terraform.  A quick way to see the errors was:
+
+```shell
+# Add the certificate to KeyChain "trust"
+export https_proxy=127.0.0.1:8081 && terraform plan
+```
+
+
 #### Limitations of free Cloudflare tier
 
 ```shell
@@ -41,12 +51,7 @@ http.host eq "${var.website}"
 You can still override DDOS rules with the free tier
 ```
 
-#### Debug Cloudflare API requests from Terraform
 
-```bash
-# Add the certificate to KeyChain "trust"
-export https_proxy=127.0.0.1:8081 && terraform plan
-```
 
 #### State file is secret
 
