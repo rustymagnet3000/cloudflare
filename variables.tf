@@ -2,8 +2,8 @@
 # case sensitive !
 variable "cloudflare_account_id" {
   description = "Cloudflare Account ID"
-  type    = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "all_zone_names" {

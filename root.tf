@@ -53,7 +53,7 @@ module "rate_limits" {
 }
 
 module "notifications" {
-  source                     = "./modules/notifications"
-  cloudflare_account_id      = var.cloudflare_account_id
+  source                  = "./modules/notifications"
+  cloudflare_account_id   = var.cloudflare_account_id
   email_for_notifications = var.rm_email_for_notifications
 }
