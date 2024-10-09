@@ -1,8 +1,24 @@
 # cloudflare
 
-Managing Cloudflare's Web App Firewall ( WAF ) via Terraform.
+Manage Cloudflare's Web App Firewall ( WAF ) with Terraform.
 
-## Learnings
+#### Authenticate to Cloudflare
+
+Use a less privileged, short-lived, `API Token` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+
+
+```shell
+
+# required for every request sent to Cloudflare
+# Terraform will pick up the API Token from here 
+export CLOUDFLARE_API_TOKEN="< token >"
+
+# The Account ID is used in "Account Level" calls to Cloudflare
+export CLOUDFLARE_ACCOUNT_ID="abcd"
+
+# to pass the Account ID into variables
+export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
+```
 
 #### Limitations of free Cloudflare tier
 
@@ -24,27 +40,6 @@ http.host eq "${var.website}"
 # ddos overrides
 You can still override DDOS rules with the free tier
 ```
-
-#### Authenticate to Cloudflare
-
-Use less privileged, short-lived, `API Tokens` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
-
-```shell
-
-# The Terraform will pick up the API Token from here 
-export CLOUDFLARE_API_TOKEN="< token >"
-export CLOUDFLARE_ACCOUNT_ID="abcd"
-
-# to pass the Account ID into variables
-export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
-```
-
-#### Environment variables
-
-To avoid reading in TF_VARs and the spaghetti complexity of sharing thoses with Modules, set:
-
--`CLOUDFLARE_API_TOKEN` ( required for every request sent to Cloudflare )
--`CLOUDFLARE_ACCOUNT_ID` ( required for some API calls to Cloudflare )
 
 #### Debug Cloudflare API requests from Terraform
 
