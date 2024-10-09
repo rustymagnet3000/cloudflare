@@ -5,7 +5,8 @@ variable "cloudflare_account_id" {
   default = ""
 }
 
-variable "su_email_for_notifications" {
+# comes from Root module
+variable "email_for_notifications" {
   description = "Email of Cloudflare interested parties"
 
   type    = string

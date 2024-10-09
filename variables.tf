@@ -1,10 +1,10 @@
-variable "image_id" {
-  default = "default"
+# env variable: TF_VAR_cloudflare_account_id
+# case sensitive !
+variable "cloudflare_account_id" {
+  description = "Cloudflare Account ID"
+  type    = string
+  default = ""
 }
-
-
-# env variable: TF_VAR_rm_cloudflare_token removed in favor of CLOUDFLARE_API_TOKEN
-
 
 variable "all_zone_names" {
   type        = list(string)
@@ -22,13 +22,7 @@ variable "rm_email_for_notifications" {
   default = ""
 }
 
-# env variable: TF_VAR_rm_cloudflare_account_id
-variable "rm_cloudflare_account_id" {
-  description = "Cloudflare Account ID"
 
-  type    = string
-  default = ""
-}
 
 variable "countries_naughty_map" {
   type = map(any)
