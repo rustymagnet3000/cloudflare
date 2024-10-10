@@ -20,6 +20,43 @@ export CLOUDFLARE_ACCOUNT_ID="abcd"
 export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
 ```
 
+#### Permissions I used
+
+Account level
+
+- Workers Pipelines
+- Notifications
+- Transform Rules
+- Account WAF
+- Workers R2 Storage
+- Account Rulesets
+- Rule Policies
+- Account Filter Lists
+- Access: Organizations, Identity Providers, and Groups
+- Account Firewall 
+- Access Rules
+- Account Settings
+
+Zone Level
+- Config Rules
+- Single Redirect
+- Transform Rules
+- HTTP DDoS Managed Ruleset
+- Bot Management
+- Zone Settings
+- Zone
+- Logs
+- Page Rules
+- Firewall Service
+- DNS
+
+> [!NOTE]
+> you have to use the template `Create Additional Tokens` to do anything with `API Tokens`.  These permissions are not viewable if you generate a `custom token`.
+
+All users 
+- API Tokens
+
+
 #### Debug Cloudflare API requests from Terraform
 
 Almost all issues I experienced related to using the wrong `CLOUDFLARE_API_TOKEN` when making change via Terraform.  A quick way to see the errors was:
