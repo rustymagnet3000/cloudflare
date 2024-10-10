@@ -15,3 +15,9 @@ data "cloudflare_list" "ip_list" {
   name       = "foo_list"
 }
 
+data "cloudflare_api_token_permission_groups" "all" {}
+
+// TODO upgrade to 5+ version and cloudflare_account
+data "cloudflare_accounts" "rm_account" {
+  name = "rusty_magnets_cloudflare"
+}

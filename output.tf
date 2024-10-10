@@ -1,30 +1,22 @@
-# root module
-output "Status" {
-  value = data.cloudflare_zone.website.status
+# root
+
+
+output "account_info" {
+  value = "${data.cloudflare_accounts.rm_account.name}:${data.cloudflare_accounts.rm_account.id}"
 }
 
-output "Plan" {
-  value = data.cloudflare_zone.website.plan
+output "zone_info" {
+  value = "id:${data.cloudflare_zone.website.id}|status:${data.cloudflare_zone.website.status}|plan:${data.cloudflare_zone.website.plan}"
 }
+
 
 # uses formatlist() to format a list with a specific prefix
-output "north_europe_sites" {
-  value     = [for v in local.north_euro_websites : "${v}"]
-  sensitive = false
-}
+# output "north_europe_sites" {
+#   value     = [for v in local.north_euro_websites : "${v}"]
+#   sensitive = false
+# }
 
-# useful to see how to get the account ID from a specific Zone Name
-output "account_id" {
-  value = data.cloudflare_zones.all_zone_ids["rustymagnet.xyz"].id
-}
 
-output "all_zones" {
-  value = [for k, v in local.cloudflare_zones_map : "${k} -> ${v}"]
-}
-
-output "zone_id_lookup" {
-  value = local.cloudflare_zones_map["rustymagnet.xyz"]
-}
 output "countries" {
   value = [for i, v in var.countries_naughty_map : "${i} : ${v}"]
 }
@@ -49,9 +41,9 @@ output "cf_list" {
 
 # firewall_rules module
 
-output "in_markets" {
-  value = module.firewall_rules.in_markets
-}
+# output "in_markets" {
+#   value = module.firewall_rules.in_markets
+# }
 
 # access_rules module
 
@@ -60,9 +52,10 @@ output "home_ip" {
   sensitive = false
 }
 
-# rate limit
-output "rl" {
-  value     = module.rate_limits.zone_rate_limit
-  sensitive = false
+output "api_tokens_on_cloudflare_account" {
+  value = "${length(data.cloudflare_api_token_permission_groups.all.account)} api tokens"
 }
 
+output "api_token_id_r2_storage" {
+  value = "${data.cloudflare_api_token_permission_groups.all.account["Workers R2 Storage Write"]}"
+}
