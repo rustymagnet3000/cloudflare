@@ -51,7 +51,7 @@ Zone Level
 - DNS
 
 > [!NOTE]
-> you have to use the template `Create Additional Tokens` to get the following permissions.  Oddly, these are not viewable if you generate a `custom token`.
+> you have to use the template `Create Additional Tokens` to do anything with `API Tokens`.  These permissions are not viewable if you generate a `custom token`.
 
 All users 
 - API Tokens
