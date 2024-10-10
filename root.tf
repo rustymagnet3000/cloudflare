@@ -57,3 +57,10 @@ module "notifications" {
   cloudflare_account_id   = var.cloudflare_account_id
   email_for_notifications = var.rm_email_for_notifications
 }
+
+module "logs" {
+  source                = "./modules/logs"
+  cloudflare_account_id = var.cloudflare_account_id
+  xyz_zone_name         = data.cloudflare_zone.website.name
+  xyz_zone_id           = data.cloudflare_zone.website.id
+}

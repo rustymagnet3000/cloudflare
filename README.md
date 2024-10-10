@@ -57,10 +57,6 @@ You can still override DDOS rules with the free tier
 
 If you check-in the state file, which is default named `terrform.tfstate`, you have just compromised your Cloudflare authentication credentials. Time to rotate those creds !
 
-#### Careful about overiding authentication creds
-
-Set `$CLOUDFLARE_API_TOKEN` it overrides any local var setting.
-
 ### State mismatch
 
 On day 1 you set up Cloudflare and add a bunch of resources.  On day 2 you set up a repo to manage Cloudflare with Terraform.  What happens ?  You need to **import** those rules.  Does that matter ?  Example:
