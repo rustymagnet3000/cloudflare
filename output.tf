@@ -57,5 +57,5 @@ output "api_tokens_on_cloudflare_account" {
 }
 
 output "api_token_id_r2_storage" {
-  value = "${data.cloudflare_api_token_permission_groups.all.account["Workers R2 Storage Write"]}"
+  value = data.cloudflare_api_token_permission_groups.all.account["Workers R2 Storage Write"]
 }
