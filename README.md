@@ -22,6 +22,7 @@ export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
 
 #### Permissions I used
 
+```shell
 Account level
 
 - Workers Pipelines
@@ -49,13 +50,15 @@ Zone Level
 - Page Rules
 - Firewall Service
 - DNS
+```
 
 > [!NOTE]
 > you have to use the template `Create Additional Tokens` to do anything with `API Tokens`.  These permissions are not viewable if you generate a `custom token`.
 
+```shell
 All users 
 - API Tokens
-
+```
 
 #### Debug Cloudflare API requests from Terraform
 
