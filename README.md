@@ -22,16 +22,18 @@ export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
 
 #### Backup state file to Cloudflare r2
 
-Almost identical to s3 backups. 
-  /*
-    backup the state file to Cloudflare's r2 
-    https://github.com/hashicorp/terraform/issues/33847
-    ---------------------
-    AWS_ACCESS_KEY_ID     - R2 token
-    AWS_SECRET_ACCESS_KEY - R2 secret
-    AWS_ENDPOINT_URL_S3   - R2 location: https://ACCOUNT_ID.r2.cloudflarestorage.com
-  */
+Almost identical to s3 backups.  When the requests get sent during an `terraform init` it actually sends it to: `https://[bucket_name].[account_id].r2.cloudflarestorage.com`
 
+
+```shell
+# environment variables
+AWS_ACCESS_KEY_ID     - R2 token
+AWS_SECRET_ACCESS_KEY - R2 secret
+AWS_ENDPOINT_URL_S3   - R2 location: https://ACCOUNT_ID.r2.cloudflarestorage.com
+
+
+related info: https://github.com/hashicorp/terraform/issues/33847
+```
 
 #### Debug Cloudflare API requests from Terraform
 
