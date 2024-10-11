@@ -9,6 +9,4 @@ resource "cloudflare_api_token" "logpush_r2_token" {
       "com.cloudflare.api.account.${var.cloudflare_account_id}" = "*"
     }
   }
-
 }
-

@@ -37,6 +37,7 @@ Account level
 - Account Firewall 
 - Access Rules
 - Account Settings
+- Logs      # free tier doesn't allow zone level logpush
 
 Zone Level
 - Config Rules
@@ -46,7 +47,6 @@ Zone Level
 - Bot Management
 - Zone Settings
 - Zone
-- Logs
 - Page Rules
 - Firewall Service
 - DNS
@@ -76,6 +76,9 @@ export https_proxy=127.0.0.1:8081 && terraform plan
 # No bot management values
 cf.bot_management.score eq 1
 not cf.bot_management.verified_bot
+
+# LogPush not available on anything apart from Enterprise Plan
+https://developers.cloudflare.com/logs/about/
 
 # Advanced Rate Limits
 no counting expression allowed
