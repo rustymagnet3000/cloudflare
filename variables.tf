@@ -22,12 +22,9 @@ variable "rm_email_for_notifications" {
   default = ""
 }
 
-
-
 variable "countries_naughty_map" {
   type = map(any)
   default = {
-    "Aussies" = "AU"
     "Kiwis"   = "NZ"
     "Russia"  = "RU"
   }
@@ -43,7 +40,6 @@ variable "my_markets" {
   ]
 }
 
-
 # env variable: TF_VAR_rm_home_ip_address
 variable "rm_home_ip_address" {
   description = "Home IP address"
@@ -51,8 +47,3 @@ variable "rm_home_ip_address" {
   type    = string
   default = ""
 }
-
-
-
-
-

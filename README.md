@@ -20,6 +20,53 @@ export CLOUDFLARE_ACCOUNT_ID="abcd"
 export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
 ```
 
+#### Backup state file to Cloudflare r2
+
+Almost identical to s3 backups. 
+  /*
+    backup the state file to Cloudflare's r2 
+    https://github.com/hashicorp/terraform/issues/33847
+    ---------------------
+    AWS_ACCESS_KEY_ID     - R2 token
+    AWS_SECRET_ACCESS_KEY - R2 secret
+    AWS_ENDPOINT_URL_S3   - R2 location: https://ACCOUNT_ID.r2.cloudflarestorage.com
+  */
+
+
+#### Debug Cloudflare API requests from Terraform
+
+Almost all issues I experienced related to using the wrong `CLOUDFLARE_API_TOKEN` when making change via Terraform.  A quick way to see the errors was:
+
+```shell
+# Add the certificate to KeyChain "trust"
+export https_proxy=127.0.0.1:8081 && terraform plan
+```
+
+
+#### Limitations of free Cloudflare tier
+
+```shell
+# No bot management values
+cf.bot_management.score eq 1
+not cf.bot_management.verified_bot
+
+# LogPush not available on anything apart from Enterprise Plan
+https://developers.cloudflare.com/logs/about/
+
+# Advanced Rate Limits
+no counting expression allowed
+action = "log" not allowed with free zones
+"log" with a an Action Response block not allowed ( as "log" overrides the response block )
+
+# Firewall Filters can't include
+http.request.method
+http.response.code
+http.host eq "${var.website}"
+
+# ddos overrides
+You can still override DDOS rules with the free tier
+```
+
 #### Permissions I used
 
 ```shell
@@ -59,42 +106,6 @@ Zone Level
 All users 
 - API Tokens
 ```
-
-#### Debug Cloudflare API requests from Terraform
-
-Almost all issues I experienced related to using the wrong `CLOUDFLARE_API_TOKEN` when making change via Terraform.  A quick way to see the errors was:
-
-```shell
-# Add the certificate to KeyChain "trust"
-export https_proxy=127.0.0.1:8081 && terraform plan
-```
-
-
-#### Limitations of free Cloudflare tier
-
-```shell
-# No bot management values
-cf.bot_management.score eq 1
-not cf.bot_management.verified_bot
-
-# LogPush not available on anything apart from Enterprise Plan
-https://developers.cloudflare.com/logs/about/
-
-# Advanced Rate Limits
-no counting expression allowed
-action = "log" not allowed with free zones
-"log" with a an Action Response block not allowed ( as "log" overrides the response block )
-
-# Firewall Filters can't include
-http.request.method
-http.response.code
-http.host eq "${var.website}"
-
-# ddos overrides
-You can still override DDOS rules with the free tier
-```
-
-
 
 #### State file is secret
 
