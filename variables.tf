@@ -25,8 +25,8 @@ variable "rm_email_for_notifications" {
 variable "countries_naughty_map" {
   type = map(any)
   default = {
-    "Kiwis"   = "NZ"
-    "Russia"  = "RU"
+    "Kiwis"  = "NZ"
+    "Russia" = "RU"
   }
 }
 
