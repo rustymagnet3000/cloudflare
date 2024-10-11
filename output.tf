@@ -26,7 +26,7 @@ output "naughty_list_count" {
 }
 
 output "find_country_id_of_aussies" {
-  value = var.countries_naughty_map["Aussies"]
+  value = var.countries_naughty_map["Kiwis"]
 }
 
 output "southern_european_markets" {
