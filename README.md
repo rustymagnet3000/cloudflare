@@ -35,6 +35,12 @@ AWS_ENDPOINT_URL_S3   - R2 location: https://ACCOUNT_ID.r2.cloudflarestorage.com
 related info: https://github.com/hashicorp/terraform/issues/33847
 ```
 
+To test the credentials work, type:
+
+```shell
+aws s3api list-buckets --endpoint-url $AWS_ENDPOINT_URL_S3
+```
+
 #### Debug Cloudflare API requests from Terraform
 
 Almost all issues I experienced related to using the wrong `CLOUDFLARE_API_TOKEN` when making change via Terraform.  A quick way to see the errors was:

@@ -52,8 +52,3 @@ output "home_ip" {
   sensitive = false
 }
 
-output "api_tokens_on_cloudflare_account" {
-  value = module.logs.api_tokens_on_cloudflare_account
-}
-
-
