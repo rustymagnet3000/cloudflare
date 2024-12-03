@@ -48,9 +48,13 @@ export https_proxy=127.0.0.1:8081 && terraform plan
 #### Limitations of free Cloudflare tier
 
 ```shell
-# No bot management values
+# Bot fields requires a Cloudflare Enterprise plan with Bot Management enabled.
+cf.bot_management.* 
 cf.bot_management.score eq 1
 not cf.bot_management.verified_bot
+
+# Enterprise + WAF Advanced plan is required, alternative is cf.waf.content_scan.has_malicious_obj
+http.request.body.size
 
 # LogPush not available on anything apart from Enterprise Plan
 https://developers.cloudflare.com/logs/about/
