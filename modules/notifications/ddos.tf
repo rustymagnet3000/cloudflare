@@ -6,8 +6,12 @@ resource "cloudflare_notification_policy" "notifications_to_email" {
   alert_type  = element(var.my_alerts, count.index)
   count       = length(var.my_alerts)
 
-  email_integration {
-    id = var.email_for_notifications
+  dynamic "email_integration" {
+    iterator = email_address
+    for_each = var.emails_for_notifications
+    content {
+      id = email_address.value
+    }
   }
 }
 

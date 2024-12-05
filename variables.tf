@@ -14,12 +14,12 @@ variable "all_zone_names" {
   ]
 }
 
-# env variable: TF_VAR_rm_email_for_notifications
-variable "rm_email_for_notifications" {
+# env variable: TF_VAR_rm_emails_for_notifications
+variable "rm_emails_for_notifications" {
   description = "Email of Cloudflare interested parties"
 
-  type    = string
-  default = ""
+  type    = list(string)
+  default = []
 }
 
 variable "countries_naughty_map" {
