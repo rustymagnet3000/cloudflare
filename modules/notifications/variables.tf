@@ -6,9 +6,9 @@ variable "cloudflare_account_id" {
 }
 
 # comes from Root module
-variable "email_for_notifications" {
+variable "emails_for_notifications" {
   description = "Email of Cloudflare interested parties"
 
-  type    = string
-  default = ""
+  type    = list(string)
+  default = []
 }
