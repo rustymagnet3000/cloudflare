@@ -27,6 +27,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: install github cli from orb
+          command: |
+            gh/install
+
+      - gh/install
+      - run:
           name: github cli version
           command: |
             gh --version
