@@ -44,6 +44,11 @@ jobs:
           command: |
             curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
+      - run:
+          name: download tflint's checksums
+          command: |
+            curl --fail -sS -L -o checksums.txt "https://github.com/terraform-linters/tflint/releases/download/v0.54.0/checksums.txt"
+
       # requires GH_TOKEN to be set  https://cli.github.com/manual/gh_help_environment
       - run:
           name: verify tflint ( to mitigate supply chain attacks )

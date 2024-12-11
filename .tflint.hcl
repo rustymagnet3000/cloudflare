@@ -1,3 +1,8 @@
+plugin "terraform" {
+  enabled = true
+  preset  = "recommended"
+}
+
 config {
   disabled_by_default = false
 }
