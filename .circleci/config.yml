@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install github cli
+          name: install latest github cli from official source
           command: |
             (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
               && sudo mkdir -p -m 755 /etc/apt/keyrings \
@@ -44,15 +44,16 @@ jobs:
           command: |
             curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
-      - run:
-          name: verify tflint ( to mitigate supply chain attacks )
-          command: |
-            gh attestation verify checksums.txt -R terraform-linters/tflint
-            sha256sum --ignore-missing -c checksums.txt
+      # # requires GH_TOKEN to be set  https://cli.github.com/manual/gh_help_environment
+      # - run:
+      #     name: verify tflint ( to mitigate supply chain attacks )
+      #     command: |
+      #       gh attestation verify checksums.txt -R terraform-linters/tflint
+      #       sha256sum --ignore-missing -c checksums.txt
       - run:
           name: tflint
           command: |
-            tflint --recursive
+            tflint --recursive --config "$(pwd)/.tflint.hcl"
 
 workflows:
   format_lint_checks:
