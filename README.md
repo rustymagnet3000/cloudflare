@@ -59,6 +59,10 @@ cf.bot_management.*
 cf.bot_management.score eq 1
 not cf.bot_management.verified_bot
 
+
+# Single Redirects
+Up to 10 in free tier allowed
+
 # Enterprise + WAF Advanced plan is required, alternative is cf.waf.content_scan.has_malicious_obj
 http.request.body.size
 

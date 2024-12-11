@@ -44,12 +44,12 @@ jobs:
           command: |
             curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
 
-      # # requires GH_TOKEN to be set  https://cli.github.com/manual/gh_help_environment
-      # - run:
-      #     name: verify tflint ( to mitigate supply chain attacks )
-      #     command: |
-      #       gh attestation verify checksums.txt -R terraform-linters/tflint
-      #       sha256sum --ignore-missing -c checksums.txt
+      # requires GH_TOKEN to be set  https://cli.github.com/manual/gh_help_environment
+      - run:
+          name: verify tflint ( to mitigate supply chain attacks )
+          command: |
+            gh attestation verify checksums.txt -R terraform-linters/tflint
+            sha256sum --ignore-missing -c checksums.txt
       - run:
           name: tflint
           command: |
