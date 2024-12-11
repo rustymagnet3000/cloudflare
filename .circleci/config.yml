@@ -26,7 +26,7 @@ jobs:
       - run:
           name: install github cli
           command: |
-            apt update && apt install gh
+            sudo apt update && sudo apt install gh
 
       - run:
           name: github cli version
