@@ -4,7 +4,7 @@ version: 2.1
 jobs:
   check_tf_formatting:
     docker:
-      - image: cimg/deploy:2023.06
+      - image: cimg/deploy:2024.11
    
     steps:
       - checkout
@@ -18,7 +18,20 @@ jobs:
           command: |
             terraform fmt -check -recursive; test $? -eq 0 
 
+  lint:
+    docker:
+      - image: cimg/deploy:2024.11
+   
+    steps:
+      - checkout
+
+      - run:
+          name: tflint
+          command: |
+            tflint --recursive
+
 workflows:
   format_lint_checks:
     jobs:
     - check_tf_formatting
+    - lint

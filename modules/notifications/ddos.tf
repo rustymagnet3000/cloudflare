@@ -15,7 +15,6 @@ resource "cloudflare_notification_policy" "notifications_to_email" {
   }
 }
 
-
 variable "my_alerts" {
   type = list(string)
   default = [
