@@ -1,4 +1,5 @@
 *.terraform
-*.hcl
+# https://stackoverflow.com/questions/67963719/should-terraform-lock-hcl-be-included-in-the-gitignore-file
+.terraform.lock.hcl
 # wildcard at end to stop the backup being checked in
 *.tfstate*
