@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  gh: circleci/github-cli@2.6
-
 jobs:
   check_tf_formatting:
     docker:
@@ -27,11 +24,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: install github cli from orb
+          name: install github cli
           command: |
-            gh/install
+            apt update && apt install gh
 
-      - gh/install
       - run:
           name: github cli version
           command: |
