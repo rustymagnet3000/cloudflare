@@ -10,13 +10,6 @@ output "zone_info" {
 }
 
 
-# uses formatlist() to format a list with a specific prefix
-# output "north_europe_sites" {
-#   value     = [for v in local.north_euro_websites : "${v}"]
-#   sensitive = false
-# }
-
-
 output "countries" {
   value = [for i, v in var.countries_naughty_map : "${i} : ${v}"]
 }
