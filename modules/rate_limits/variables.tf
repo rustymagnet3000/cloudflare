@@ -1,10 +1,3 @@
-variable "cloudflare_account_id" {
-  description = "Cloudflare Account ID for Access Rules"
-
-  type    = string
-  default = ""
-}
-
 variable "paths_to_protect" {
   type = list(string)
   default = [

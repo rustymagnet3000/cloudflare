@@ -11,14 +11,4 @@ locals {
     "\"GR\"",
     "\"PT\"",
   ]
-
-  north_european_websites = [
-    ".dk",
-    ".no",
-    ".se",
-    ".nl",
-  ]
-
-
-  north_euro_websites = formatlist("\"rustymagnet%s\"", local.north_european_websites)
 }
