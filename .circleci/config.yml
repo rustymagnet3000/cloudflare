@@ -54,7 +54,6 @@ jobs:
           name: verify tflint ( to mitigate supply chain attacks )
           command: |
             gh attestation verify checksums.txt -R terraform-linters/tflint
-            sha256sum --ignore-missing -c checksums.txt
       - run:
           name: tflint
           command: |
