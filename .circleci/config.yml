@@ -32,7 +32,7 @@ jobs:
             docker run --rm -t \
             -v $(pwd):/data \
             ghcr.io/terraform-linters/tflint \
-            --config "$(pwd)/.tflint.hcl" \
+            --config ".tflint.hcl" \
             --format=compact
 
 workflows:
