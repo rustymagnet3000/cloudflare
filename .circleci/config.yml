@@ -23,6 +23,9 @@ jobs:
    
     steps:
       - checkout
+      # turn on docker to allow docker run
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: run tflint from docker image
           command: |
