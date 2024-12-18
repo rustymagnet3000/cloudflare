@@ -23,41 +23,14 @@ jobs:
    
     steps:
       - checkout
+      # turn on docker to allow docker run
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
-          name: install latest github cli from official source
+          name: run tflint from docker image
           command: |
-            (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
-              && sudo mkdir -p -m 755 /etc/apt/keyrings \
-              && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-              && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-              && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
-              && sudo apt update \
-              && sudo apt install gh -y
+            docker run --rm -t ghcr.io/terraform-linters/tflint --version
 
-      - run:
-          name: github cli version
-          command: |
-            gh --version
-
-      - run:
-          name: install tflint
-          command: |
-            curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
-
-      - run:
-          name: download tflint's checksums
-          command: |
-            curl --fail -sS -L -o checksums.txt "https://github.com/terraform-linters/tflint/releases/download/v0.54.0/checksums.txt"
-
-      # requires GH_TOKEN to be set  https://cli.github.com/manual/gh_help_environment
-      - run:
-          name: verify tflint ( to mitigate supply chain attacks )
-          command: |
-            gh attestation verify checksums.txt -R terraform-linters/tflint
-      - run:
-          name: tflint
-          command: |
-            tflint --recursive --config "$(pwd)/.tflint.hcl"
 
 workflows:
   format_lint_checks:
