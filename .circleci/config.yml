@@ -11,7 +11,6 @@ jobs:
           name: echo Terraform version
           command: |
             terraform version
-
       - run:
           name: Terraform fmt to provoke issues
           command: |
@@ -27,11 +26,23 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: run tflint from docker image
+          name: set up tflint from dockerfile
           command: |
-            docker run --rm -t ghcr.io/terraform-linters/tflint --version
-
-
+            docker build -f Dockerfile_tflint -t $(pwd | xargs basename):latest .
+      - run:
+          name: tflint version
+          command: |
+            docker run \
+            --rm -t $(pwd | xargs basename):latest \
+            --version
+      - run:
+          name: tflint runs without failing even if issues found
+          command: |
+            docker run \
+            --rm -t $(pwd | xargs basename):latest \
+            --recursive \
+            --format=compact \
+            --force
 workflows:
   format_lint_checks:
     jobs:

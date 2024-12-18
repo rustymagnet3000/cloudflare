@@ -1,0 +1,9 @@
+FROM ghcr.io/terraform-linters/tflint
+
+# copy all files to docker container
+COPY ./ /data/
+
+# set the config file location
+ENV TFLINT_CONFIG_FILE=/data/.tflint.hcl
+
+CMD ["tflint"]
