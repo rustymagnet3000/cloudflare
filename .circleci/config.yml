@@ -36,11 +36,13 @@ jobs:
             --rm -t $(pwd | xargs basename):latest \
             --version
       - run:
-          name: set up tflint from dockerfile
+          name: tflint runs without failing even if issues found
           command: |
             docker run \
             --rm -t $(pwd | xargs basename):latest \
-            --recursive --format=compact 
+            --recursive \
+            --format=compact \
+            --force
 workflows:
   format_lint_checks:
     jobs:

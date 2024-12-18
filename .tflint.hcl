@@ -3,7 +3,6 @@ plugin "terraform" {
 }
 
 config {
-  force = true
   disabled_by_default = false
   ignore_module = {}
 }
