@@ -29,8 +29,11 @@ jobs:
       - run:
           name: run tflint from docker image
           command: |
-            docker run --rm -t ghcr.io/terraform-linters/tflint --version
-
+            docker run --rm -t \
+            -v $(pwd):/data \
+            ghcr.io/terraform-linters/tflint \
+            --config "$(pwd)/.tflint.hcl" \
+            --format=compact
 
 workflows:
   format_lint_checks:
