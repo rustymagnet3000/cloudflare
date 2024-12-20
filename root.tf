@@ -3,7 +3,6 @@ module "access_rules" {
   cloudflare_account_id = var.cloudflare_account_id
   countries_naughty_map = var.countries_naughty_map
   home_ip_address       = var.rm_home_ip_address
-  xyz_zone_id           = data.cloudflare_zone.website.id
 }
 
 module "dns" {
@@ -26,7 +25,6 @@ module "transform_rules" {
 
 module "ddos" {
   source                = "./modules/ddos"
-  cloudflare_account_id = var.cloudflare_account_id
   xyz_zone_id           = data.cloudflare_zone.website.id
 }
 module "zones" {
@@ -37,17 +35,14 @@ module "zones" {
 
 module "firewall_rules" {
   source                = "./modules/firewall_rules"
-  cloudflare_zones_map  = local.cloudflare_zones_map
   my_markets            = var.my_markets
   cloudflare_account_id = var.cloudflare_account_id
-  home_ip_address       = var.rm_home_ip_address
   xyz_zone_id           = data.cloudflare_zone.website.id
-  website               = data.cloudflare_zone.website.name
+
 }
 
 module "rate_limits" {
   source                = "./modules/rate_limits"
-  cloudflare_account_id = var.cloudflare_account_id
   xyz_zone_id           = data.cloudflare_zone.website.id
   website               = data.cloudflare_zone.website.name
 }
@@ -60,7 +55,5 @@ module "notifications" {
 
 module "tokens" {
   source                = "./modules/tokens"
-  cloudflare_account_id = var.cloudflare_account_id
-  xyz_zone_name         = data.cloudflare_zone.website.name
-  xyz_zone_id           = data.cloudflare_zone.website.id
+
 }

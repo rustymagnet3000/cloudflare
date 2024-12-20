@@ -1,4 +1,4 @@
 output "zone_rate_limit" {
-  #value = "Rate Limit ID: ${data.cloudflare_rulesets.rate_limit_info}"
   value = data.cloudflare_rulesets.rate_limit_info.rulesets
+  description = "Output of rulesets related to Rate Limits"
 }

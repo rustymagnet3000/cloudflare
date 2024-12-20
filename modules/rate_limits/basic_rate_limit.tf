@@ -1,5 +1,5 @@
 # not Advanced Rate Limit as no counting expression
-// free tier limitations https://developers.cloudflare.com/waf/rate-limiting-rules/
+# free tier limitations https://developers.cloudflare.com/waf/rate-limiting-rules/
 resource "cloudflare_ruleset" "zone_rl_custom_response" {
   zone_id     = var.xyz_zone_id
   name        = "Basic Rate Limit for my zone"
