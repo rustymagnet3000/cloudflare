@@ -6,8 +6,9 @@ variable "cloudflare_account_id" {
 }
 
 variable "countries_naughty_map" {
-  type    = map(any)
-  default = {}
+  type        = map(any)
+  description = "A map of countries to Block or Challenge"
+  default     = {}
 }
 
 variable "home_ip_address" {

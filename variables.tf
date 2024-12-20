@@ -6,14 +6,6 @@ variable "cloudflare_account_id" {
   default     = ""
 }
 
-variable "all_zone_names" {
-  type        = list(string)
-  description = "A list of Zones by names. Used as part of data_sources.tf for dynamic zone_id look-up"
-  default = [
-    "rustymagnet.xyz"
-  ]
-}
-
 # env variable: TF_VAR_rm_emails_for_notifications
 variable "rm_emails_for_notifications" {
   description = "Email of Cloudflare interested parties"

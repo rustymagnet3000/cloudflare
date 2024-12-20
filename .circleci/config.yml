@@ -19,7 +19,7 @@ jobs:
   lint:
     docker:
       - image: cimg/deploy:2024.11
-   
+    resource_class: small
     steps:
       - checkout
       # turn on docker to allow docker run
