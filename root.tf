@@ -24,8 +24,8 @@ module "transform_rules" {
 }
 
 module "ddos" {
-  source                = "./modules/ddos"
-  xyz_zone_id           = data.cloudflare_zone.website.id
+  source      = "./modules/ddos"
+  xyz_zone_id = data.cloudflare_zone.website.id
 }
 module "zones" {
   source                = "./modules/zones"
@@ -42,9 +42,9 @@ module "firewall_rules" {
 }
 
 module "rate_limits" {
-  source                = "./modules/rate_limits"
-  xyz_zone_id           = data.cloudflare_zone.website.id
-  website               = data.cloudflare_zone.website.name
+  source      = "./modules/rate_limits"
+  xyz_zone_id = data.cloudflare_zone.website.id
+  website     = data.cloudflare_zone.website.name
 }
 
 module "notifications" {
@@ -54,6 +54,6 @@ module "notifications" {
 }
 
 module "tokens" {
-  source                = "./modules/tokens"
+  source = "./modules/tokens"
 
 }
