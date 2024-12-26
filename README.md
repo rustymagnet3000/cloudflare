@@ -2,6 +2,15 @@
 
 Manage Cloudflare's Web App Firewall ( WAF ) with Terraform.
 
+#### Pipeline checks for safer deployments
+
+In this repo you will see:
+
+- `terraform fmt`
+- `tflint`
+- `terraform init`
+- `terraform plan`
+
 #### Authenticate to Cloudflare
 
 Use a less privileged, short-lived, `API Token` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
