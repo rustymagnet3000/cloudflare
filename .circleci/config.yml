@@ -43,8 +43,25 @@ jobs:
             --recursive \
             --format=compact \
             --force
+
+  terraform_init_and_validate:
+    docker:
+      - image: cimg/deploy:2024.11
+   
+    steps:
+      - checkout
+      - run: terraform version
+      - run:
+          name: Terraform init with no backend
+          command: |
+            terraform init -backend=false -upgrade
+      - run:
+          name: Terraform validate
+          command: |
+            terraform validate
 workflows:
   format_lint_checks:
     jobs:
     - check_tf_formatting
     - lint
+    - terraform_init_and_validate
