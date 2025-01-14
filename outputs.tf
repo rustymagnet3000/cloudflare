@@ -11,6 +11,13 @@ output "zone_info" {
   description = "Zone Info"
 }
 
+output "challenged_markets" {
+  value = [for s in var.challenged_markets_list : format("%q", s)]
+}
+
+output "challenged_markets_as_str" {
+  value = local.challenged_markets_str
+}
 
 output "countries" {
   value       = [for i, v in var.countries_naughty_map : "${i} : ${v}"]

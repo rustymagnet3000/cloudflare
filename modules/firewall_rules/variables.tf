@@ -11,7 +11,7 @@ variable "cloudflare_account_id" {
   default = ""
 }
 
-variable "my_markets" {
-  type    = list(string)
-  default = []
+variable "challenged_markets" {
+  type    = string
+  default = ""
 }
