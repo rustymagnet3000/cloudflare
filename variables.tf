@@ -6,7 +6,7 @@ variable "cloudflare_account_id" {
   default     = ""
 }
 
-# env variable: TF_VAR_rm_emails_for_notifications
+# env variable: TF_VAR_rm_emails_for_notifications is array of emails ["foo@bar.com"]
 variable "rm_emails_for_notifications" {
   description = "Email of Cloudflare interested parties"
 
@@ -22,13 +22,13 @@ variable "countries_naughty_map" {
   }
 }
 
-variable "my_markets" {
+variable "challenged_markets_list" {
   type = list(string)
   default = [
-    "\"NZ\"",
-    "\"AU\"",
-    "\"FR\"",
-    "\"GB\"",
+    "NZ",
+    "AU",
+    "FR",
+    "GB",
   ]
 }
 

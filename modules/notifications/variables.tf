@@ -9,6 +9,6 @@ variable "cloudflare_account_id" {
 variable "emails_for_notifications" {
   description = "Email of Cloudflare interested parties"
 
-  type    = list(string)
-  default = []
+  type      = list(string)
+  default   = []
 }

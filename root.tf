@@ -35,10 +35,9 @@ module "zones" {
 
 module "firewall_rules" {
   source                = "./modules/firewall_rules"
-  my_markets            = var.my_markets
   cloudflare_account_id = var.cloudflare_account_id
   xyz_zone_id           = data.cloudflare_zone.website.id
-
+  challenged_markets    = local.challenged_markets_str
 }
 
 module "rate_limits" {

@@ -4,6 +4,9 @@ locals {
   #   k => data.cloudflare_zones.all_zone_ids[k].zones[0].id
   # }
 
+
+  challenged_markets_str = join(" ", formatlist("\"%s\"", var.challenged_markets_list))
+
   southern_european_markets = [
     "\"IT\"",
     "\"FR\"",

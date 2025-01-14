@@ -37,17 +37,17 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
   rules {
     action      = "managed_challenge"
     expression  = <<EOF
-                (
-                    http.request.uri.path contains "/posts/"
-                    and not any(lower(http.request.headers.names[*])[*]
-                    contains "authorization")
-                    and not ( ip.geoip.country in { ${join(" ", var.my_markets)} } )
-                )
+    (
+        http.request.uri.path contains "/posts/"
+        and not any(lower(http.request.headers.names[*])[*] contains "authorization")
+        and not ( ip.geoip.country in { ${var.challenged_markets} } )
+    )
     EOF
     description = "Challenge requests that don't send authorization header from known country"
     enabled     = true
   }
-
+  
+  # Key is auto lowered by CF. But need lower() to lowercase the value field
   rules {
     action      = "block"
     expression  = <<EOF
@@ -57,10 +57,10 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
 
                 )
     EOF
-    description = "Block requests that pass \"foo=bar\" Header"
+    description = "Block requests that pass \"foo=bar\" Header."
     enabled     = true
   }
-
+  # header presence. lower() is not required for the "key". CF auto handles this
   rules {
     action      = "block"
     expression  = <<EOF
