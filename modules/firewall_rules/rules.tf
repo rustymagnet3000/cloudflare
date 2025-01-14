@@ -46,7 +46,7 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
     description = "Challenge requests that don't send authorization header from known country"
     enabled     = true
   }
-  
+
   # Key is auto lowered by CF. But need lower() to lowercase the value field
   rules {
     action      = "block"
