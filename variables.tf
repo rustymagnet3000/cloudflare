@@ -25,12 +25,34 @@ variable "countries_naughty_map" {
 variable "challenged_markets_list" {
   type = list(string)
   default = [
-    "NZ",
-    "AU",
-    "FR",
     "GB",
+    "BY",
+    "CN",
+    "CO",
+    "CU",
+    "CD",
+    "EG",
+    "GN",
+    "IR",
+    "IQ",
+    "KZ",
+    "LY",
+    "ML",
+    "MA",
+    "MM",
+    "NI",
+    "KP",
+    "PK",
+    "RU",
+    "SO",
+    "SY",
+    "VE",
+    "VN",
+    "YE",
+    "ZW",
   ]
 }
+
 
 # env variable: TF_VAR_rm_home_ip_address
 variable "rm_home_ip_address" {

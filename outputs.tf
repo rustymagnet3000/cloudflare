@@ -11,8 +11,8 @@ output "zone_info" {
   description = "Zone Info"
 }
 
-output "challenged_markets" {
-  value = [for s in var.challenged_markets_list : format("%q", s)]
+output "total_challenged_markets" {
+  value = length(var.challenged_markets_list)
 }
 
 output "challenged_markets_as_str" {
