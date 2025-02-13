@@ -82,6 +82,7 @@ Up to 10 in free tier allowed
 
 # Enterprise + WAF Advanced plan is required, alternative is cf.waf.content_scan.has_malicious_obj
 http.request.body.size
+cf.waf.score
 
 # LogPush not available on anything apart from Enterprise Plan
 https://developers.cloudflare.com/logs/about/
