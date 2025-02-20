@@ -13,10 +13,11 @@ check terraform formatting
 Check code for basic mistakes
 
 # terraform init -backend=false
-Init the repo without a full state file sync. This flushes out issues with Providers
+Init the repo without a full state file sync
+This flushes out issues with Providers
 
 # terraform validate
-Check, prior to a longer `terraform plan` that the repo works AOK
+Check, prior to `terraform plan` the repo works AOK
 ```
 
 #### Authenticate to Cloudflare
@@ -25,7 +26,6 @@ Use a less privileged, short-lived, `API Token` instead of the traditional email
 
 
 ```shell
-
 # required for every request sent to Cloudflare
 # Terraform will pick up the API Token from here 
 export CLOUDFLARE_API_TOKEN="< token >"
@@ -36,6 +36,14 @@ export CLOUDFLARE_ACCOUNT_ID="abcd"
 # to pass the Account ID into variables
 export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
 ```
+
+#### Cloudflare child modules, size and speed to "plan"
+
+This repo was originally written to have a Root folder and a bunch of Child Modules ( firewall rules, redirects, DNS, etc ).  These Child Modules would contain resources.  All resources, from Root of Child Modules would be written into a single State file.  One workflow, one state file. Simple.
+
+What happens if Cloudflare resources managed by your Terraform code grow ?  And grow ?  The `plan` step will get slower and slower.   Now add in Cloudflare;  CF are infamous for "breaking changes'.  See the v4 to v5 Terraform provider upgrade helper [notes](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade).  Ouch.  This is where mulitple Provider versions and state files are really useful.  You can run different Cloudflare Provider versions.  So you can "test" the latest `Version` in a smaller subset of resources to keep the "breaking changes" to a manageable amount.
+
+In this repo the `notifications` module was re-purposed to have it's own State file.
 
 #### Backup state file to Cloudflare r2
 

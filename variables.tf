@@ -14,14 +14,6 @@ variable "email_of_root_cf_user" {
   default = ""
 }
 
-# env variable: TF_VAR_rm_emails_for_notifications is array of emails ["foo@bar.com"]
-variable "rm_emails_for_notifications" {
-  description = "Email of Cloudflare interested parties"
-
-  type    = list(string)
-  default = []
-}
-
 variable "countries_naughty_map" {
   type = map(any)
   default = {
