@@ -46,11 +46,12 @@ module "rate_limits" {
   website     = data.cloudflare_zone.website.name
 }
 
-module "notifications" {
-  source                   = "./modules/notifications"
-  cloudflare_account_id    = var.cloudflare_account_id
-  emails_for_notifications = var.rm_emails_for_notifications
-}
+# removed so different CF Provider versions could be used to test "breaking changes" of v4->v5 upgrade
+# module "notifications" {
+#   source                   = "./modules/notifications"
+#   cloudflare_account_id    = var.cloudflare_account_id
+#   emails_for_notifications = var.rm_emails_for_notifications
+# }
 
 module "tokens" {
   source = "./modules/tokens"
