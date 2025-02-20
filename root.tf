@@ -54,5 +54,4 @@ module "notifications" {
 
 module "tokens" {
   source = "./modules/tokens"
-
 }

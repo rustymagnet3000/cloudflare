@@ -1,8 +1,10 @@
 terraform {
+  # https://developer.hashicorp.com/terraform/language/providers/requirements#best-practices-for-provider-versions
+  # https://developer.hashicorp.com/terraform/language/expressions/version-constraints
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "4.43.0"
+      version = ">= 4.51.0, < 5.0.0"
     }
   }
 
