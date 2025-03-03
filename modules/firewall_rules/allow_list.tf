@@ -18,9 +18,9 @@ resource "cloudflare_list" "foo_list" {
 
 
 resource "cloudflare_list_item" "example_list_item" {
-  for_each = var.allowed_ips
+  for_each   = var.allowed_ips
   account_id = var.cloudflare_account_id
-  list_id = var.allow_list_id
-  ip = each.value
-  comment = each.key
+  list_id    = var.allow_list_id
+  ip         = each.value
+  comment    = each.key
 }

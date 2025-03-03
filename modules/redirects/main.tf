@@ -10,8 +10,8 @@ resource "cloudflare_ruleset" "redirect_promo_to_post_one" {
       action = "redirect"
       action_parameters = {
         from_value = {
-          status_code = 301
-          target_url = { expression = "concat(\"https://\", http.host, \"/posts/my-first-post/\")"}
+          status_code           = 301
+          target_url            = { expression = "concat(\"https://\", http.host, \"/posts/my-first-post/\")" }
           preserve_query_string = true
         }
       }

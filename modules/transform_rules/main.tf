@@ -6,30 +6,30 @@ resource "cloudflare_ruleset" "add_request_headers" {
   phase       = "http_request_late_transform"
   rules = [
     {
-    action = "rewrite"
-    action_parameters = {
-      headers = {
-        foo-asn = {
-          operation  = "set"
-          expression = "ip.geoip.asnum"
-        },
-        foo-country = {
-          operation  = "set"
-          expression = "ip.src.country"
-        },
-        foo-ip = {
-          operation  = "set"
-          expression = "ip.src"
-        },
-        foo-ray-id = {
-          operation  = "set"
-          expression = "cf.ray_id"
+      action = "rewrite"
+      action_parameters = {
+        headers = {
+          foo-asn = {
+            operation  = "set"
+            expression = "ip.geoip.asnum"
+          },
+          foo-country = {
+            operation  = "set"
+            expression = "ip.src.country"
+          },
+          foo-ip = {
+            operation  = "set"
+            expression = "ip.src"
+          },
+          foo-ray-id = {
+            operation  = "set"
+            expression = "cf.ray_id"
+          }
         }
       }
-    }
-    expression  = "true"
-    description = "HTTP Request Header Modification Rule"
-    enabled     = true
+      expression  = "true"
+      description = "HTTP Request Header Modification Rule"
+      enabled     = true
     }
   ]
 }

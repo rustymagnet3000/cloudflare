@@ -5,9 +5,9 @@ resource "cloudflare_access_rule" "countries_to_challenge" {
   mode       = "managed_challenge"
 
   configuration = {
-  target = "country"
+    target = "country"
     value  = each.value
-}
+  }
 }
 
 
@@ -17,7 +17,7 @@ resource "cloudflare_access_rule" "home_whitelist" {
   mode       = "whitelist"
 
   configuration = {
-  target = "ip"
+    target = "ip"
     value  = var.home_ip_address
-}
+  }
 }
