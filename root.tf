@@ -7,7 +7,7 @@ module "access_rules" {
 
 module "dns" {
   source                = "./modules/dns"
-  xyz_zone_id           = data.cloudflare_zone.website.id
+  xyz_zone_id           = var.rustymagnet_zone_id
   xyz_zone_name         = data.cloudflare_zone.website.name
   cloudflare_account_id = var.cloudflare_account_id
 }
@@ -42,7 +42,7 @@ module "firewall_rules" {
 
 module "rate_limits" {
   source      = "./modules/rate_limits"
-  xyz_zone_id = data.cloudflare_zone.website.id
+  xyz_zone_id = var.rustymagnet_zone_id
   website     = data.cloudflare_zone.website.name
 }
 

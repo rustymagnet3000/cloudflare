@@ -1,5 +1,7 @@
 # cloudflare
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/rustymagnet3000/cloudflare/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/rustymagnet3000/cloudflare/tree/master)
+
 Manage Cloudflare Firewall ( WAF ), Redirects, Bot Management and more with Terraform.
 
 Cloudflare is notorious for introducing "breaking changes" as it moves more Resources into Terraform.  This repo attempts to stay updated and overcome "breaking changes" to keep Cloudflare managed by code rather than the Cloudflare Web Console.
