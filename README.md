@@ -1,11 +1,10 @@
 # cloudflare
 
-Manage Cloudflare's Web App Firewall ( WAF ) with Terraform.
+Manage Cloudflare Firewall ( WAF ), Redirects, Bot Management and more with Terraform.
 
 #### Pipeline checks for safer deployments
 
 ```shell
-
 # terraform fmt
 check terraform formatting
 
@@ -17,7 +16,8 @@ Init the repo without a full state file sync
 This flushes out issues with Providers
 
 # terraform validate
-Check, prior to `terraform plan` the repo works AOK
+Finds issues like " Error: Reference to undeclared resource"
+Quicker feedback rather than waiting for `terraform plan` to complete
 ```
 
 #### Authenticate to Cloudflare
