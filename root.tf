@@ -54,5 +54,6 @@ module "rate_limits" {
 # }
 
 module "tokens" {
-  source = "./modules/tokens"
+  source                = "./modules/tokens"
+  cloudflare_account_id = var.cloudflare_account_id
 }

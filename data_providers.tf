@@ -1,14 +1,12 @@
 data "cloudflare_zone" "website" {
-  name = "rustymagnet.xyz"
+  zone_id = var.rustymagnet_zone_id
 }
-
 
 data "cloudflare_list" "ip_list" {
   account_id = var.cloudflare_account_id
-  name       = "foo_list"
+  list_id    = "c6bba31b2035423f9a65f2e9ff5dec46"
 }
 
-// TODO upgrade to 5+ version and cloudflare_account
-data "cloudflare_accounts" "rm_account" {
-  name = "rusty_magnets_cloudflare"
+data "cloudflare_account" "rm_account" {
+  account_id = var.cloudflare_account_id
 }

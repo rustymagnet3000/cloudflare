@@ -15,3 +15,8 @@ variable "challenged_markets" {
   type    = string
   default = ""
 }
+
+variable "allow_list_id" {
+  type    = string
+  default = "string ID of IP allow list"
+}

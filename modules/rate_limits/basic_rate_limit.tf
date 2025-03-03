@@ -7,16 +7,16 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
   kind        = "zone"
   phase       = "http_ratelimit"
 
-  rules {
+  rules = [{
     action = "block"
-    action_parameters {
-      response {
+    action_parameters = {
+      response = {
         status_code  = 429
         content      = "{\"response\": \"please slow down\"}"
         content_type = "application/json"
       }
     }
-    ratelimit {
+    ratelimit = {
       characteristics     = ["ip.src", "cf.colo.id"]
       period              = 10
       requests_per_period = 5
@@ -31,5 +31,5 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
         EOF
     description = "Rate limit requests to ${var.website}"
     enabled     = true
-  }
+  }]
 }

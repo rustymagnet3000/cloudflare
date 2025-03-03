@@ -4,7 +4,7 @@ resource "cloudflare_access_rule" "countries_to_challenge" {
   notes      = "Challenge ${each.key} with country code ${each.value}"
   mode       = "managed_challenge"
 
-  configuration {
+  configuration = {
     target = "country"
     value  = each.value
   }
@@ -16,7 +16,7 @@ resource "cloudflare_access_rule" "home_whitelist" {
   notes      = "request from home"
   mode       = "whitelist"
 
-  configuration {
+  configuration = {
     target = "ip"
     value  = var.home_ip_address
   }

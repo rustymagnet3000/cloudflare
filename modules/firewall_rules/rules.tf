@@ -7,7 +7,7 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
 
   // cool rule: http.request.uri.path.extension in { "php" "jsp" "cgi" } 
 
-  rules {
+  rules = [{
     action     = "block"
     expression = <<EOF
     (
@@ -18,11 +18,10 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
 
     description = "Block any requests with file extensions I don't use"
     enabled     = true
-  }
-
-  rules {
-    action      = "managed_challenge"
-    expression  = <<EOF
+    },
+    {
+      action      = "managed_challenge"
+      expression  = <<EOF
     (
       starts_with(http.host, "foobar")
       and (http.request.method eq "GET")
@@ -30,46 +29,47 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
       and (http.request.uri.path in { ${join(" ", local.paths_to_protection)} } )
     )
     EOF
-    description = "Testing query parameter pollution on a single subdomain"
-    enabled     = true
-  }
-
-  rules {
-    action      = "managed_challenge"
-    expression  = <<EOF
+      description = "Testing query parameter pollution on a single subdomain"
+      enabled     = true
+    },
+    {
+      action      = "managed_challenge"
+      expression  = <<EOF
     (
         http.request.uri.path contains "/posts/"
         and not any(lower(http.request.headers.names[*])[*] contains "authorization")
         and not ( ip.geoip.country in { ${var.challenged_markets} } )
     )
     EOF
-    description = "Challenge requests that don't send authorization header from known country"
-    enabled     = true
-  }
-
-  # Key is auto lowered by CF. But need lower() to lowercase the value field
-  rules {
-    action      = "block"
-    expression  = <<EOF
+      description = "Challenge requests that don't send authorization header from known country"
+      enabled     = true
+    },
+    {
+      action      = "block"
+      expression  = <<EOF
                 (
                     http.request.uri.path contains "/"
                     and (any(http.request.headers["foo"][*] == "bar"))
 
                 )
     EOF
-    description = "Block requests that pass \"foo=bar\" Header."
-    enabled     = true
-  }
-  # header presence. lower() is not required for the "key". CF auto handles this
-  rules {
-    action      = "block"
-    expression  = <<EOF
+      description = "Block requests that pass \"foo=bar\" Header."
+      enabled     = true
+    },
+    {
+      action      = "block"
+      expression  = <<EOF
                 (
                     http.request.uri.path contains "/"
                     and (any(lower(http.request.headers.names[*])[*] == "foo-id"))
                 )
     EOF
-    description = "Block requests that pass \"foo-id\" Header value, regardless of value"
-    enabled     = true
-  }
+      description = "Block requests that pass \"foo-id\" Header value, regardless of value"
+      enabled     = true
+  }]
+
+
+
+  # Key is auto lowered by CF. But need lower() to lowercase the value field
+  # header presence. lower() is not required for the "key". CF auto handles this
 }
