@@ -7,7 +7,8 @@ variable "cloudflare_account_id" {
 
 # env variable: TF_VAR_rustymagnet_zone_id    ( case sensitive )
 variable "rustymagnet_zone_id" {
-  type = string
+  type    = string
+  default = ""
 }
 
 # env variable: TF_VAR_email_of_root_cf_user
