@@ -1,6 +1,6 @@
 # root output
 output "account_info" {
-  value       = "${data.cloudflare_account.rm_account.name}"
+  value       = data.cloudflare_account.rm_account.name
   description = "Cloudflare Account Info"
 }
 
