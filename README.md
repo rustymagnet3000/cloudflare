@@ -1,11 +1,12 @@
 # cloudflare
 
-Manage Cloudflare's Web App Firewall ( WAF ) with Terraform.
+Manage Cloudflare Firewall ( WAF ), Redirects, Bot Management and more with Terraform.
 
-#### Pipeline checks for safer deployments
+Cloudflare is notorious for introducing "breaking changes" as it moves more Resources into Terraform.  This repo attempts to stay updated and overcome "breaking changes" to keep Cloudflare managed by code rather than the Cloudflare Web Console.
+
+#### Pipeline checks
 
 ```shell
-
 # terraform fmt
 check terraform formatting
 
@@ -17,7 +18,8 @@ Init the repo without a full state file sync
 This flushes out issues with Providers
 
 # terraform validate
-Check, prior to `terraform plan` the repo works AOK
+Finds issues like " Error: Reference to undeclared resource"
+Quicker feedback rather than waiting for `terraform plan` to complete
 ```
 
 #### Authenticate to Cloudflare
@@ -56,7 +58,6 @@ AWS_ACCESS_KEY_ID     - R2 token
 AWS_SECRET_ACCESS_KEY - R2 secret
 AWS_ENDPOINT_URL_S3   - R2 location: https://ACCOUNT_ID.r2.cloudflarestorage.com
 
-
 related info: https://github.com/hashicorp/terraform/issues/33847
 ```
 
@@ -64,6 +65,21 @@ To test the credentials work, type:
 
 ```shell
 aws s3api list-buckets --endpoint-url $AWS_ENDPOINT_URL_S3
+```
+
+Failed with an error like `Error: failed to get shared config profile `?  You could set `export TF_LOG=”DEBUG”` and re-run the `terraform init`.  Better to try and set a local `aws profile`:
+
+```shell
+brew install awscli
+
+# set KeyID and Secret Key
+aws configure --profile cf
+AWS Access Key ID [None]: ....xx
+AWS Secret Access Key [None]: ...xx
+Default region name [None]: WEUR
+
+# check aok
+aws configure list --profile cf
 ```
 
 #### Debug Cloudflare API requests from Terraform
