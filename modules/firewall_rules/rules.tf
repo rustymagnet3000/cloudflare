@@ -7,7 +7,7 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
 
   // cool rule: http.request.uri.path.extension in { "php" "jsp" "cgi" } 
 
-  rules {
+  rules =[ {
     action     = "block"
     expression = <<EOF
     (
@@ -18,9 +18,8 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
 
     description = "Block any requests with file extensions I don't use"
     enabled     = true
-  }
-
-  rules {
+  },
+    {
     action      = "managed_challenge"
     expression  = <<EOF
     (
@@ -32,9 +31,8 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
     EOF
     description = "Testing query parameter pollution on a single subdomain"
     enabled     = true
-  }
-
-  rules {
+    },
+    {
     action      = "managed_challenge"
     expression  = <<EOF
     (
@@ -45,10 +43,8 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
     EOF
     description = "Challenge requests that don't send authorization header from known country"
     enabled     = true
-  }
-
-  # Key is auto lowered by CF. But need lower() to lowercase the value field
-  rules {
+    },
+    {
     action      = "block"
     expression  = <<EOF
                 (
@@ -59,9 +55,8 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
     EOF
     description = "Block requests that pass \"foo=bar\" Header."
     enabled     = true
-  }
-  # header presence. lower() is not required for the "key". CF auto handles this
-  rules {
+    },
+    {
     action      = "block"
     expression  = <<EOF
                 (
@@ -71,5 +66,10 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
     EOF
     description = "Block requests that pass \"foo-id\" Header value, regardless of value"
     enabled     = true
-  }
+    }]
+
+
+
+  # Key is auto lowered by CF. But need lower() to lowercase the value field
+  # header presence. lower() is not required for the "key". CF auto handles this
 }

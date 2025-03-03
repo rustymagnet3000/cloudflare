@@ -1,9 +1,13 @@
-# env variable: TF_VAR_cloudflare_account_id
-# case sensitive !
+# env variable: TF_VAR_cloudflare_account_id    ( case sensitive )
 variable "cloudflare_account_id" {
   description = "Cloudflare Account ID"
   type        = string
   default     = ""
+}
+
+# env variable: TF_VAR_rustymagnet_zone_id    ( case sensitive )
+variable "rustymagnet_zone_id" {
+  type = string
 }
 
 # env variable: TF_VAR_email_of_root_cf_user
