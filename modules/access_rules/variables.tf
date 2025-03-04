@@ -5,10 +5,13 @@ variable "cloudflare_account_id" {
   default = ""
 }
 
-variable "countries_naughty_map" {
-  type        = map(any)
-  description = "A map of countries to Block or Challenge"
-  default     = {}
+variable "countries_to_challenge" {
+  type = map(object({
+    country_code = string
+    id           = string
+  }))
+
+  default = {}
 }
 
 variable "home_ip_address" {

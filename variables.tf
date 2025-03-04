@@ -19,14 +19,6 @@ variable "email_of_root_cf_user" {
   default = ""
 }
 
-variable "countries_naughty_map" {
-  type = map(any)
-  default = {
-    "Kiwis"  = "NZ"
-    "Russia" = "RU"
-  }
-}
-
 variable "challenged_markets_list" {
   type = list(string)
   default = [
@@ -46,4 +38,22 @@ variable "rm_home_ip_address" {
 
   type    = string
   default = ""
+}
+
+variable "countries_to_challenge" {
+  type = map(object({
+    country_code = string
+    id           = string
+  }))
+
+  default = {
+    "Russia" = {
+      country_code = "RU"
+      id           = "98017b76b32f4ee8b76220e5bfa75b93"
+    }
+    "Kiwis" = {
+      country_code = "NZ"
+      id           = "20c8f7d7a58d4557b9c594e6db1d5543"
+    }
+  }
 }
