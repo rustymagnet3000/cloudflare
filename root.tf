@@ -1,8 +1,8 @@
 module "access_rules" {
-  source                = "./modules/access_rules"
-  cloudflare_account_id = var.cloudflare_account_id
-  countries_naughty_map = var.countries_naughty_map
-  home_ip_address       = var.rm_home_ip_address
+  source                 = "./modules/access_rules"
+  cloudflare_account_id  = var.cloudflare_account_id
+  countries_to_challenge = var.countries_to_challenge
+  home_ip_address        = var.rm_home_ip_address
 }
 
 module "dns" {
