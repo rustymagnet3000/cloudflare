@@ -15,11 +15,10 @@ Producre|Description|Missing
 Bot Management|Bot variables such as the Bot Score are not available|cf.bot_management.* 
 Bot Management|Verified Bot check not available|cf.bot_management.verified_bot
 Redirects| limited number of redirects| x 10
-Redirects|Max 10 redirects allowed|-
 Body Size|Enterprise + WAF Advanced plan required|`http.request.body.size`
 WAF Score|Enterprise + WAF Advanced plan required|`cf.waf.score`
 Logs|Only available to Enterprise customers|logpush
-Lists|Only 1 x lists with free plans| x 1
+Lists|limited number of lists with free plans| x 1
 Rate Limits|"not entitled to exclude cached assets in ratelimiting"| `requests_to_origin = true`
 Rate Limits|Requires Enterprise Zone + Advanced Rate Limit license| `no counting expression allowed`
 Rate Limits|not allowed with free zones|`action = "log"` 
