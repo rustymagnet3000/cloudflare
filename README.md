@@ -6,6 +6,36 @@ Manage Cloudflare Firewall ( WAF ), Redirects, Bot Management and more with Terr
 
 Cloudflare is notorious for introducing "breaking changes" as it moves more Resources into Terraform.  This repo attempts to stay updated and overcome "breaking changes" to keep Cloudflare managed by code rather than the Cloudflare Web Console.
 
+
+## Limitations of free Cloudflare tier
+
+
+Producre|Description|Missing
+--|--|--
+Bot Management|Bot variables such as the Bot Score are not available|cf.bot_management.* 
+Bot Management|Verified Bot check not available|cf.bot_management.verified_bot
+Redirects| limited number of redirects| x 10
+Redirects|Max 10 redirects allowed|-
+Body Size|Enterprise + WAF Advanced plan required|`http.request.body.size`
+WAF Score|Enterprise + WAF Advanced plan required|`cf.waf.score`
+Logs|Only available to Enterprise customers|logpush
+Lists|Only 1 x lists with free plans| x 1
+Rate Limits|"not entitled to exclude cached assets in ratelimiting"| `requests_to_origin = true`
+Rate Limits|Requires Enterprise Zone + Advanced Rate Limit license| `no counting expression allowed`
+Rate Limits|not allowed with free zones|`action = "log"` 
+Rate Limits|custom responses not allowed with free zones|`please slow down` 
+DDOS|You can still override DDOS rules with the free tier|-
+
+
+
+### Firewall Filters can't include
+
+```sh
+http.request.method
+http.response.code
+http.host eq "${var.website}"
+```
+
 #### Pipeline checks
 
 ```shell
@@ -94,44 +124,6 @@ export https_proxy=127.0.0.1:8081 && terraform plan
 ```
 
 
-#### Limitations of free Cloudflare tier
-
-```shell
-# Bot fields requires a Cloudflare Enterprise plan with Bot Management enabled.
-cf.bot_management.* 
-cf.bot_management.score eq 1
-not cf.bot_management.verified_bot
-
-
-# Single Redirects
-Up to 10 in free tier allowed
-
-# Enterprise + WAF Advanced plan is required, alternative is cf.waf.content_scan.has_malicious_obj
-http.request.body.size
-cf.waf.score
-
-# LogPush not available on anything apart from Enterprise Plan
-https://developers.cloudflare.com/logs/about/
-
-# Lists
-Only 1 x lists with free plan
-
-# Rate Limits
-"not entitled to exclude cached assets in ratelimiting",
-
-# Advanced Rate Limits
-no counting expression allowed
-action = "log" not allowed with free zones
-"log" with a an Action Response block not allowed ( as "log" overrides the response block )
-
-# Firewall Filters can't include
-http.request.method
-http.response.code
-http.host eq "${var.website}"
-
-# ddos overrides
-You can still override DDOS rules with the free tier
-```
 
 #### Permissions I used
 
