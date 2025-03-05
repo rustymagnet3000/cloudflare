@@ -113,6 +113,8 @@ cf.waf.score
 # LogPush not available on anything apart from Enterprise Plan
 https://developers.cloudflare.com/logs/about/
 
+# Lists
+Only 1 x lists with free plan
 
 # Rate Limits
 "not entitled to exclude cached assets in ratelimiting",

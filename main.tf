@@ -10,12 +10,6 @@ import {
   id = "accounts/${var.cloudflare_account_id}/eef7806a3eed49e49c8609c8533edb70"
 }
 
-
-# import {
-#   to = module.ddos.cloudflare_ruleset.ddos_overrides
-#   id = "zones/${var.rustymagnet_zone_id}/4d21379b4f9f4bb088e0729962c8b3cf"
-# }
-
 # wants the ruleset not the individual rule
 # Rate limit
 import {
@@ -32,20 +26,3 @@ import {
   to = module.zones.cloudflare_zone.rusty_magnet_xyz
   id = var.rustymagnet_zone_id
 }
-
-
-# import {
-#   to = module.firewall_rules.cloudflare_ruleset.my_zone_custom_firewall
-#   id = "zones/${var.rustymagnet_zone_id}/4263086d67dc4becaf321758f95a9c05"
-# }
-
-
-
-# import {
-#   for_each = var.allowed_ips
-#   to       = module.firewall_rules.cloudflare_list_item.example_list_item[each.key]
-#   id       = "accounts/${var.cloudflare_account_id}/${each.value.id}"
-# }
-
-
-
