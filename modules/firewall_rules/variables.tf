@@ -20,3 +20,13 @@ variable "allow_list_id" {
   type    = string
   default = "string ID of IP allow list"
 }
+
+variable "allowed_ips" {
+  type = map(object({
+    ip_address = string
+    comment    = string
+    id         = string
+  }))
+
+  default = {}
+}

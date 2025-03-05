@@ -12,6 +12,13 @@ variable "xyz_zone_id" {
   default     = ""
 }
 
+variable "cloudflare_account_id" {
+  description = "Cloudflare Account ID"
+
+  type    = string
+  default = ""
+}
+
 variable "website" {
   description = "Name of website from Zone data source in Root module"
   type        = string
