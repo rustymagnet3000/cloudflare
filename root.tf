@@ -45,9 +45,3 @@ module "transform_rules" {
   source      = "./modules/transform_rules"
   xyz_zone_id = var.rustymagnet_zone_id
 }
-
-module "zones" {
-  source                = "./modules/zones"
-  cloudflare_account_id = var.cloudflare_account_id
-  xyz_zone_name         = data.cloudflare_zone.website.name
-}

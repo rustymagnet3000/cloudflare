@@ -4,11 +4,6 @@ output "account_info" {
   description = "Cloudflare Account Info"
 }
 
-# output "zone_info" {
-#   value       = "id:${data.cloudflare_zone.website.id}|status:${data.cloudflare_zone.website.status}"
-#   description = "Zone Info"
-# }
-
 output "total_challenged_markets" {
   value = length(var.challenged_markets_list)
 }
