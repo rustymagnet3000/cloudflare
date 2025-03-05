@@ -22,7 +22,3 @@ import {
   id = "${var.cloudflare_account_id}/5a15b3cd3dd5eb6d4ed8528722e21fc3c95d3988"
 }
 
-import {
-  to = module.zones.cloudflare_zone.rusty_magnet_xyz
-  id = var.rustymagnet_zone_id
-}
