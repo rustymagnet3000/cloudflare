@@ -5,7 +5,7 @@ import {
 
 import {
   for_each = local.zone_settings
-  to = cloudflare_zone_setting.overrides[each.key]
-  id = "${var.rustymagnet_zone_id}/${each.key}"
+  to       = cloudflare_zone_setting.overrides[each.key]
+  id       = "${var.rustymagnet_zone_id}/${each.key}"
 }
 
