@@ -1,7 +1,3 @@
-# import {
-#   id = "${var.cloudflare_account_id}/b3e5edb2c6248b103512217dd6563a72"
-#   to = cloudflare_account_member.root_account_member
-# }
 
 import {
   for_each = var.countries_to_challenge
@@ -21,21 +17,11 @@ import {
 # }
 
 # wants the ruleset not the individual rule
-import {
-  to = module.redirects.cloudflare_ruleset.redirect_promo_to_post_one
-  id = "zones/${var.rustymagnet_zone_id}/809f09290df64762b4bc5248ee3611fc"
-}
-
+# Rate limit
 import {
   to = module.rate_limits.cloudflare_ruleset.zone_rl_custom_response
   id = "zones/${var.rustymagnet_zone_id}/3709fc4f9ecb419e837f057d7b305984"
 }
-
-import {
-  to = module.transform_rules.cloudflare_ruleset.add_request_headers
-  id = "zones/${var.rustymagnet_zone_id}/5cf698bd708a46e8bc079ffad44d398f"
-}
-
 
 import {
   to = module.dns.cloudflare_workers_custom_domain.foo_worker_dns_entry
@@ -48,10 +34,10 @@ import {
 }
 
 
-import {
-  to = module.firewall_rules.cloudflare_ruleset.my_zone_custom_firewall
-  id = "zones/${var.rustymagnet_zone_id}/4263086d67dc4becaf321758f95a9c05"
-}
+# import {
+#   to = module.firewall_rules.cloudflare_ruleset.my_zone_custom_firewall
+#   id = "zones/${var.rustymagnet_zone_id}/4263086d67dc4becaf321758f95a9c05"
+# }
 
 
 
@@ -63,10 +49,3 @@ import {
 
 
 
-resource "cloudflare_account_member" "root_account_member" {
-  account_id = var.cloudflare_account_id
-  email      = var.email_of_root_cf_user
-  roles = [
-    "33666b9c79b9a5273fc7344ff42f953d" # super admin
-  ]
-}
