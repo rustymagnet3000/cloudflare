@@ -17,11 +17,12 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
       }
     }
     ratelimit = {
-      characteristics     = ["ip.src", "cf.colo.id"]
+      characteristics     = ["cf.colo.id", "ip.src"]
       period              = 10
       requests_per_period = 5
-      requests_to_origin  = false
-      mitigation_timeout  = 10 # free plan has to use 10
+      # don't count cached requests in Rate Limit counter
+      requests_to_origin = true
+      mitigation_timeout = 10 # free plan has to use 10
     }
     # the following expression can't use HTTP Response Code, http.host or Request Method
     expression  = <<EOF
