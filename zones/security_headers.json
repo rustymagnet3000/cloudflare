@@ -1,0 +1,12 @@
+{
+    "id" : "security_header",
+    "value" : {
+      "strict_transport_security" : {
+        "enabled" : true,
+        "max_age" : 63072000,
+        "include_subdomains" : true,
+        "preload" : false,
+        "nosniff" : true
+      }
+    }
+}
