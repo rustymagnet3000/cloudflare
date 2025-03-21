@@ -17,14 +17,6 @@ locals {
 }
 
 
-output "security_settings" {
-  value = {
-    sts = format("strict_transport_security | enabled: %s\nstrict_transport_security sub-domains | enabled: %s\n", 
-    local.securityHeaders.value.strict_transport_security.enabled,
-    local.securityHeaders.value.strict_transport_security.include_subdomains
-    )
-  }
-}
 
 
 
