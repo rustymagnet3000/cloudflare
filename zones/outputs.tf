@@ -36,3 +36,4 @@ output "rustymagnet_com_zone_id" {
   description = "rustymagnet.com Zone ID"
 }
 
+

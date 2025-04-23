@@ -5,7 +5,6 @@ locals {
     zone.name => zone.result[*].id
   }
 
-
   securityHeaders = jsondecode(file("security_headers.json"))
 
   zone_settings = {
@@ -18,11 +17,10 @@ locals {
     max_upload          = 100,
     replace_insecure_js = "off",
     security_header     = local.securityHeaders.value
+  }
 
+  cloudflare_zid_settings = {
+    for zone in data.cloudflare_zones.all_rm_zones :
+    zone.name => local.zone_settings
   }
 }
-
-
-
-
-
