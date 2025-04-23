@@ -1,5 +1,9 @@
 output "zone_info" {
-  value       = "id:${data.cloudflare_zone.rustymagnet_zone.zone_id}\nstatus:${data.cloudflare_zone.rustymagnet_zone.status}"
+  value       = <<-EOT
+  name:   ${data.cloudflare_zone.rustymagnet_zone.name}
+  id:     ${data.cloudflare_zone.rustymagnet_zone.zone_id}
+  status: ${data.cloudflare_zone.rustymagnet_zone.status}  
+  EOT
   description = "Zone Info"
 }
 
@@ -18,6 +22,17 @@ output "strict_transport_security" {
 }
 
 output "all_zones" {
-  value       = local.cloudflare_domains_map
+  value       = { for k, v in local.cloudflare_domains_map : k => v }
   description = "All Zones from dynamic lookup"
 }
+
+output "all_zones_ids" {
+  value       = values(local.cloudflare_domains_map)
+  description = "Prints all zone ids"
+}
+
+output "rustymagnet_com_zone_id" {
+  value       = local.cloudflare_domains_map["rustymagnet.com"]
+  description = "rustymagnet.com Zone ID"
+}
+
