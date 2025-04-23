@@ -16,3 +16,8 @@ output "strict_transport_security" {
     )
   }
 }
+
+output "all_zones" {
+  value       = local.cloudflare_domains_map
+  description = "All Zones from dynamic lookup"
+}

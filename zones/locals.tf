@@ -1,4 +1,16 @@
 locals {
+
+  # cloudflare_domains_map = {
+  #   data.cloudflare_zones.all_rm_zones[each.key] = "here"
+  # }
+
+
+  cloudflare_domains_map = tomap({
+    for zone in data.cloudflare_zones.all_rm_zones :
+    zone.name => zone.result[*].id
+  })
+
+
   securityHeaders = jsondecode(file("security_headers.json"))
 
   zone_settings = {
