@@ -12,7 +12,7 @@ variable "rustymagnet_zone_id" {
 }
 
 variable "rustymagnet_zones_set" {
-  type        = set(string)
+  type        = list(string)
   description = "A list of Rusty Magnet's domains. Used by data_sources.tf for dynamic lookups of zone_ids"
   default = [
     "rustymagnet.com",

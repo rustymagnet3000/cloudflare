@@ -4,7 +4,7 @@ data "cloudflare_zone" "rustymagnet_zone" {
 
 # filter only pull Zones for Zones in the Set
 data "cloudflare_zones" "all_rm_zones" {
-  for_each = var.rustymagnet_zones_set
+  for_each = toset(var.rustymagnet_zones_set)
   account = {
     id = var.cloudflare_account_id
   }
