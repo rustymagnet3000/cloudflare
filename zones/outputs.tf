@@ -37,3 +37,12 @@ output "rustymagnet_com_zone_id" {
 }
 
 
+output "zone_id_from_original_data_source_map" {
+  value       = one(data.cloudflare_zones.all_rm_zones["rustymagnet.com"].result).id
+  description = "rustymagnet.com Zone ID"
+}
+
+output "zone_ids_from_original_data_source_map_v2" {
+  value = [for v in data.cloudflare_zones.all_rm_zones : v.result[0].id]
+}
+
