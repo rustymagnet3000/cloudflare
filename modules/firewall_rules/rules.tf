@@ -5,18 +5,15 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
   kind        = "zone"
   phase       = "http_request_firewall_custom"
 
-  // cool rule: http.request.uri.path.extension in { "php" "jsp" "cgi" } 
-
   rules = [{
     action     = "block"
     expression = <<EOF
     (
-      not (http.host contains "foobar")
-      and http.request.uri.path contains "knowhere"
+      http.request.uri.path.extension in { "php" "jsp" "cgi" }
     )
     EOF
 
-    description = "Block any requests with file extensions I don't use"
+    description = "Block any requests with php jsp cgi extensions "
     enabled     = true
     },
     {
@@ -29,7 +26,7 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
       and (http.request.uri.path in { ${join(" ", local.paths_to_protection)} } )
     )
     EOF
-      description = "Testing query parameter pollution on a single subdomain"
+      description = "Challenge any request with query parameters to certain paths"
       enabled     = true
     },
     {
@@ -48,12 +45,12 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
       action      = "block"
       expression  = <<EOF
                 (
-                    http.request.uri.path contains "/"
+                    http.request.uri.path eq "/"
                     and (any(http.request.headers["foo"][*] == "bar"))
 
                 )
     EOF
-      description = "Block requests that pass \"foo=bar\" Header."
+      description = "Block request to landing page if Header equals \"foo=bar\""
       enabled     = true
     },
     {

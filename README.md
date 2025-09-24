@@ -19,7 +19,7 @@ WAF Score|Enterprise + WAF Advanced plan required|`cf.waf.score`
 Logs|Only available to Enterprise customers|logpush
 Lists|limited number of lists with free plans| x 1
 Rate Limits|"not entitled to exclude cached assets in ratelimiting"| `requests_to_origin = true`
-Rate Limits|Requires Enterprise Zone + Advanced Rate Limit license| `no counting expression allowed`
+-|Requires Enterprise Zone + Advanced Rate Limit license| `no counting expression allowed`
 -|not allowed with free zones|`action = "log"` 
 -|custom responses not allowed with free zones|`please slow down` 
 DDOS|You can still override DDOS rules with the free tier|-
