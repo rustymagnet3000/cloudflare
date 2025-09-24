@@ -41,6 +41,18 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
       description = "Challenge requests that don't send authorization header from known country"
       enabled     = true
     },
+    # "message": "not entitled: the use of field cf.bot_management.score is not allowed, a Bot Management plan is required",
+    # {
+    #   action      = "managed_challenge"
+    #   expression  = <<EOT
+    #             (
+    #                 http.request.uri.path eq "/"
+    #                 and ( cf.bot_management.score le 29 )
+    #             )
+    # EOT
+    #   description = "Challenge requests with Likely Automated Bot Score"
+    #   enabled     = true
+    # },
     {
       action      = "block"
       expression  = <<EOF
@@ -53,20 +65,22 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
       description = "Block request to landing page if Header equals \"foo=bar\""
       enabled     = true
     },
+
+    # Key is auto lowered by CF. But need lower() to lowercase the value field
+    # header presence. lower() is not required for the "key". CF auto handles this
     {
       action      = "block"
-      expression  = <<EOF
+      expression  = <<EOT
                 (
                     http.request.uri.path contains "/"
                     and (any(lower(http.request.headers.names[*])[*] == "foo-id"))
                 )
-    EOF
+    EOT
       description = "Block requests that pass \"foo-id\" Header value, regardless of value"
       enabled     = true
-  }]
+    }
+  ]
 
 
 
-  # Key is auto lowered by CF. But need lower() to lowercase the value field
-  # header presence. lower() is not required for the "key". CF auto handles this
 }

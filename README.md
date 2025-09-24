@@ -13,15 +13,16 @@ Products|Description|---
 Bot Management|Bot Score not available|`cf.bot_management.score`
 -|Verified Bot check not available|`cf.bot_management.verified_bot`
 -|Fingerprint hashes not available|`cf.bot_management.ja4`
-Redirects| limited number of redirects| x 10
-Body Size|Enterprise + WAF Advanced plan required|`http.request.body.size`
-WAF Score|Enterprise + WAF Advanced plan required|`cf.waf.score`
+Redirects| limited number with free tier | x 10
+Body Size|Enterprise zone + WAF Advanced required|`http.request.body.size`
+WAF Score|Enterprise zone + WAF Advanced required|`cf.waf.score`
 Logs|Only available to Enterprise customers|logpush
-Lists|limited number of lists with free plans| x 1
-Rate Limits|"not entitled to exclude cached assets in ratelimiting"| `requests_to_origin = true`
--|Requires Enterprise Zone + Advanced Rate Limit license| `no counting expression allowed`
--|not allowed with free zones|`action = "log"` 
--|custom responses not allowed with free zones|`please slow down` 
+Lists|limited number with free tier | x 1
+WAF Custom Rules|limited number with free tier|5
+Rate Limits|Not entitled to exclude cached assets| `requests_to_origin = true`
+-|No custom `counting` without Advanced Rate Limit license| `counting_expression`
+-|No `log` with free zones|`action = "log"` 
+-|No custom responses with free zones|`please slow down` 
 DDOS|You can still override DDOS rules with the free tier|-
 
 
