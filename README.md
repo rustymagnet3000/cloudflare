@@ -4,16 +4,15 @@
 
 Manage Cloudflare Firewall ( WAF ), Redirects, Bot Management and more with Terraform.
 
-Cloudflare is notorious for introducing "breaking changes" as it moves more Resources into Terraform.  This repo attempts to stay updated and overcome "breaking changes" to keep Cloudflare managed by code rather than the Cloudflare Web Console.
-
-
 ## Limitations of free Cloudflare tier
 
+Many headaches moving Cloudflare infrastructure into Terraform relates to limitation of the `free` zones:
 
-Producre|Description|Missing
+Products|Description|---
 --|--|--
-Bot Management|Bot variables such as the Bot Score are not available|cf.bot_management.* 
-Bot Management|Verified Bot check not available|cf.bot_management.verified_bot
+Bot Management|Bot Score not available|`cf.bot_management.score`
+-|Verified Bot check not available|`cf.bot_management.verified_bot`
+-|Fingerprint hashes not available|`cf.bot_management.ja4`
 Redirects| limited number of redirects| x 10
 Body Size|Enterprise + WAF Advanced plan required|`http.request.body.size`
 WAF Score|Enterprise + WAF Advanced plan required|`cf.waf.score`
@@ -21,8 +20,8 @@ Logs|Only available to Enterprise customers|logpush
 Lists|limited number of lists with free plans| x 1
 Rate Limits|"not entitled to exclude cached assets in ratelimiting"| `requests_to_origin = true`
 Rate Limits|Requires Enterprise Zone + Advanced Rate Limit license| `no counting expression allowed`
-Rate Limits|not allowed with free zones|`action = "log"` 
-Rate Limits|custom responses not allowed with free zones|`please slow down` 
+-|not allowed with free zones|`action = "log"` 
+-|custom responses not allowed with free zones|`please slow down` 
 DDOS|You can still override DDOS rules with the free tier|-
 
 
