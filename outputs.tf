@@ -9,7 +9,7 @@ output "total_challenged_markets" {
 }
 
 output "challenged_markets_as_str" {
-  value = local.challenged_markets_str
+  value = join(" ", formatlist("country:%s", var.challenged_markets_list))
 }
 
 output "naughty_list_count" {

@@ -7,6 +7,10 @@ output "zone_info" {
   description = "Zone Info"
 }
 
+output "raw_data_source_zones" {
+  value = data.cloudflare_zones.all_rm_zones
+}
+
 output "zone_settings" {
   value       = { for k, v in local.zone_settings : k => v }
   description = "Zone Settings"
