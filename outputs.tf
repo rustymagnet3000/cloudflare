@@ -4,11 +4,11 @@ output "account_info" {
   description = "Cloudflare Account Info"
 }
 
-output "total_challenged_markets" {
+output "challenged_countries_total" {
   value = length(var.challenged_markets_list)
 }
 
-output "challenged_markets_as_str" {
+output "challenged_countries" {
   value = join(" ", formatlist("country:%s", var.challenged_markets_list))
 }
 
