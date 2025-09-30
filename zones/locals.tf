@@ -34,18 +34,4 @@ locals {
     }
   }
 
-  zones_under_bot_management = {
-    "rustymagnet.xyz" = {
-      ai_bots_protection = "disabled"
-      crawler_protection = "disabled"
-      fight_mode         = false
-      enable_js          = false
-    }
-    "rustymagnet.com" = {
-      ai_bots_protection = "disabled"
-      crawler_protection = "disabled"
-      fight_mode         = false
-      enable_js          = false
-    }
-  }
 }
