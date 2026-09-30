@@ -57,5 +57,3 @@ variable "countries_to_challenge" {
     }
   }
 }
-
-

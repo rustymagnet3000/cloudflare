@@ -30,7 +30,7 @@
 #                     and (http.request.uri.path contains "/foobar")
 #                     and (http.response.code eq 404)
 #                 )
-#                 EOF      
+#                 EOF
 #     }
 #     # the following expression can't use HTTP Response Code
 #     expression = <<EOF

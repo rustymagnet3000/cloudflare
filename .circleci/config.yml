@@ -4,7 +4,7 @@ jobs:
   check_tf_formatting:
     docker:
       - image: cimg/deploy:2024.11
-   
+
     steps:
       - checkout
       - run:
@@ -14,7 +14,7 @@ jobs:
       - run:
           name: Terraform fmt to provoke issues
           command: |
-            terraform fmt -check -recursive; test $? -eq 0 
+            terraform fmt -check -recursive; test $? -eq 0
 
   lint:
     docker:
@@ -47,7 +47,7 @@ jobs:
   terraform_init_and_validate:
     docker:
       - image: cimg/deploy:2024.11
-   
+
     steps:
       - checkout
       - run: terraform version
