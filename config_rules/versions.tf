@@ -6,7 +6,6 @@ terraform {
     }
   }
 
-
   backend "s3" {
     bucket = "rm-terraform"
     key    = "config_rules.tfstate"

@@ -2,7 +2,7 @@ output "zone_info" {
   value       = <<-EOT
   name:   ${data.cloudflare_zone.rustymagnet_zone.name}
   id:     ${data.cloudflare_zone.rustymagnet_zone.zone_id}
-  status: ${data.cloudflare_zone.rustymagnet_zone.status}  
+  status: ${data.cloudflare_zone.rustymagnet_zone.status}
   EOT
   description = "Zone Info"
 }
@@ -49,4 +49,3 @@ output "zone_id_from_original_data_source_map" {
 output "zone_ids_from_original_data_source_map_v2" {
   value = [for v in data.cloudflare_zones.all_rm_zones : v.result[0].id]
 }
-

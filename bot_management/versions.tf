@@ -6,7 +6,6 @@ terraform {
     }
   }
 
-
   backend "s3" {
     bucket = "rm-terraform"
     key    = "bot_management.tfstate"

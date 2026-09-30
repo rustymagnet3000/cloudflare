@@ -37,4 +37,3 @@ output "home_ip" {
   sensitive   = false
   description = "Home IP"
 }
-

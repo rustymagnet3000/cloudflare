@@ -14,4 +14,3 @@ locals {
     "ssl"            = "full",
   }
 }
-
