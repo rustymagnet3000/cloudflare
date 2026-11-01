@@ -62,46 +62,6 @@ export CLOUDFLARE_ACCOUNT_ID="abcd"
 export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
 ```
 
-### Permissions I used
-
-```text
-Account level
-
-- Workers Pipelines
-- Notifications
-- Transform Rules
-- Account WAF
-- Workers R2 Storage
-- Account Rulesets
-- Rule Policies
-- Account Filter Lists
-- Access: Organizations, Identity Providers, and Groups
-- Account Firewall
-- Access Rules
-- Account Settings
-- Logs      # free tier doesn't allow zone level logpush
-
-Zone Level
-- Config Rules
-- Single Redirect
-- Transform Rules
-- HTTP DDoS Managed Ruleset
-- Bot Management
-- Zone Settings
-- Zone
-- Page Rules
-- Firewall Service
-- DNS
-```
-
-> [!NOTE]
-> you have to use the template `Create Additional Tokens` to do anything with `API Tokens`.  These permissions are not viewable if you generate a `custom token`.
-
-```text
-All users
-- API Tokens
-```
-
 ## State management
 
 ### Cloudflare child modules, size and speed to "plan"
@@ -110,7 +70,9 @@ This repo was originally written to have a Root folder and a bunch of Child Modu
 
 What happens if Cloudflare resources managed by your Terraform code grow?  And grow?  The `plan` step will get slower and slower.  Now add in Cloudflare;  CF are infamous for "breaking changes".  See the v4 to v5 Terraform provider upgrade helper [notes](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade).  Ouch.  This is where multiple Provider versions and state files are really useful.  You can run different Cloudflare Provider versions.  So you can "test" the latest `Version` in a smaller subset of resources to keep the "breaking changes" to a manageable amount.
 
-In this repo the `notifications` module was re-purposed to have its own State file.
+This repo now splits by product.  Each product area is its own Root Module, with its own State file and its own scoped service account token: `bot_management`, `config_rules`, `lists`, `notifications`, `zones` and the Root Module itself.
+
+Each token's blast radius is limited to one product and rollbacks stay quick.  A broken `list` does not stop you changing a Firewall Rule.
 
 ### Backup state file to Cloudflare R2
 
