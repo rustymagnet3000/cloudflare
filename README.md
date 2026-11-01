@@ -2,7 +2,7 @@
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/rustymagnet3000/cloudflare/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/rustymagnet3000/cloudflare/tree/master)
 
-Manage Cloudflare Firewall (WAF), Redirects, Bot Management and more with Terraform.
+A simple way to manage Cloudflare infrastructure with Terraform.
 
 ## Table of contents
 
