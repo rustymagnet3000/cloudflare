@@ -36,14 +36,6 @@ Many headaches moving Cloudflare infrastructure into Terraform relate to limitat
 | DDoS | You can still override DDoS rules with the free tier, but scoped overrides using the `expression` field are not allowed on free zones | — |
 | Snippets | Not available on free zones at all; paid plans only since GA (July 2026). Free zones had 5 per zone during the beta | — |
 
-### Firewall filters can't include
-
-```text
-http.request.method
-http.response.code
-http.host eq "${var.website}"
-```
-
 ## Authentication and setup
 
 ### Authenticate to Cloudflare
