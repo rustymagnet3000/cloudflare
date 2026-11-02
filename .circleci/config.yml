@@ -15,6 +15,15 @@ jobs:
           name: Terraform fmt to provoke issues
           command: |
             terraform fmt -check -recursive; test $? -eq 0
+      - run:
+          name: Every S3 backend must declare a state key
+          command: |
+            fail=0
+            for f in */versions.tf; do
+              grep -q 'backend "s3"' "$f" || continue
+              grep -qE '^[[:space:]]*key[[:space:]]*=' "$f" || { echo "no backend key: $f"; fail=1; }
+            done
+            test $fail -eq 0
 
   lint:
     docker:
