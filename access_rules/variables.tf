@@ -5,13 +5,6 @@ variable "cloudflare_account_id" {
   default     = ""
 }
 
-# env variable: TF_VAR_rm_home_ip_address    ( case sensitive )
-variable "rm_home_ip_address" {
-  description = "Home IP address to whitelist, read from TF env vars"
-  type        = string
-  default     = ""
-}
-
 variable "countries_to_challenge" {
   description = "Countries served a managed challenge, keyed by label. The id is the existing Cloudflare access rule, used by imports.tf."
 

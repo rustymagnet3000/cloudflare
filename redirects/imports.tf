@@ -5,5 +5,5 @@
 
 import {
   to = cloudflare_ruleset.redirect_promo_to_post_one
-  id = "${var.rustymagnet_zone_id}/1c71afd3a6ed434f9a58bc70bffdee68"
+  id = "zones/${var.rustymagnet_zone_id}/1c71afd3a6ed434f9a58bc70bffdee68"
 }

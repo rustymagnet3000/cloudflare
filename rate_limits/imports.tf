@@ -5,5 +5,5 @@
 
 import {
   to = cloudflare_ruleset.zone_rl_custom_response
-  id = "${var.rustymagnet_zone_id}/3709fc4f9ecb419e837f057d7b305984"
+  id = "zones/${var.rustymagnet_zone_id}/3709fc4f9ecb419e837f057d7b305984"
 }

@@ -8,15 +8,3 @@ resource "cloudflare_access_rule" "countries_to_challenge" {
     value  = each.value.country_code
   }
 }
-
-
-resource "cloudflare_access_rule" "home_whitelist" {
-  account_id = var.cloudflare_account_id
-  notes      = "request from home"
-  mode       = "whitelist"
-
-  configuration = {
-    target = "ip"
-    value  = var.rm_home_ip_address
-  }
-}
