@@ -1,7 +1,7 @@
 resource "cloudflare_ruleset" "redirect_promo_to_post_one" {
-  zone_id     = var.xyz_zone_id
+  zone_id     = var.rustymagnet_zone_id
   description = "Redirects ruleset"
-  name        = "redirects subdomains on ${var.xyz_zone_name}/promo/ to Blog posts/my-first-post/"
+  name        = "redirects subdomains on ${data.cloudflare_zone.website.name}/promo/ to Blog posts/my-first-post/"
   phase       = "http_request_dynamic_redirect"
   kind        = "zone"
 
@@ -21,7 +21,7 @@ resource "cloudflare_ruleset" "redirect_promo_to_post_one" {
           and (http.request.uri.path eq "/promo/")
       )
       EOF
-      description = "Redirect visitor from *.${var.xyz_zone_name}/promo/ to Blog Post 1"
+      description = "Redirect visitor from *.${data.cloudflare_zone.website.name}/promo/ to Blog Post 1"
       enabled     = true
   }]
 }

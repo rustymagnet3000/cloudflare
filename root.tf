@@ -17,19 +17,6 @@ module "dns" {
   cloudflare_account_id = var.cloudflare_account_id
 }
 
-module "redirects" {
-  source        = "./modules/redirects"
-  xyz_zone_name = data.cloudflare_zone.website.name
-  xyz_zone_id   = var.rustymagnet_zone_id
-}
-
-
-module "rate_limits" {
-  source      = "./modules/rate_limits"
-  xyz_zone_id = var.rustymagnet_zone_id
-  website     = data.cloudflare_zone.website.name
-}
-
 module "tokens" {
   source                = "./modules/tokens"
   cloudflare_account_id = var.cloudflare_account_id
