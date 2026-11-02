@@ -7,8 +7,9 @@ variable "cloudflare_account_id" {
 
 # env variable: TF_VAR_rustymagnet_zone_id
 variable "rustymagnet_zone_id" {
-  type    = string
-  default = ""
+  description = "Zone ID for rustymagnet.xyz, read from TF env vars"
+  type        = string
+  default     = ""
 }
 
 variable "rustymagnet_zones_set" {
