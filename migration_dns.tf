@@ -1,10 +1,8 @@
 # Temporary: moves dns out of the root state into its own stack.
 #
-# Tells Terraform to forget the custom domain WITHOUT destroying it.
-#
-# NOTE: dns/imports.tf does not exist yet -- the Workers custom domain ID is
-# still needed. Do not apply this file until that import block is in place,
-# or the custom domain will be left unmanaged by any stack.
+# Tells Terraform to forget the custom domain WITHOUT destroying it. The
+# matching import block lives in dns/imports.tf. Apply dns/ first, so the
+# custom domain is adopted before the root module lets go of it.
 #
 # Delete this file once `terraform apply` has been run here and in dns/, and
 # both plans report no changes.
