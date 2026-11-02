@@ -13,11 +13,7 @@ output "zone_info" {
 }
 
 output "managed_zone_settings" {
-  value = concat(
-    keys(local.zone_settings_string),
-    keys(local.zone_settings_number),
-    ["security_header"],
-  )
+  value       = keys(local.zone_settings)
   description = "Setting IDs this stack manages, applied to every zone above"
 }
 
