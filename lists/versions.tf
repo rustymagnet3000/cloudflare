@@ -8,6 +8,7 @@ terraform {
 
   backend "s3" {
     bucket = "rm-terraform"
+    key    = "lists.tfstate"
     region = "auto"
 
     skip_credentials_validation = true

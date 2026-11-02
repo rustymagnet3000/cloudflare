@@ -2,7 +2,7 @@
 variable "cloudflare_account_id" {
   description = "Cloudflare Account ID"
   type        = string
-  default     = "Cloudflare Account ID that is read from TF env vars"
+  default     = ""
 }
 
 
@@ -14,6 +14,8 @@ variable "list_id" {
 
 
 variable "allowed_ips" {
+  description = "Star Wars IPs in the list, keyed by character. The id is the existing Cloudflare list item, used by imports.tf."
+
   type = map(object({
     ip_address = string
     comment    = string

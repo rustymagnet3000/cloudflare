@@ -9,7 +9,7 @@ resource "cloudflare_list" "star_wars_list" {
 resource "cloudflare_list_item" "star_wars_ip_item" {
   for_each   = var.allowed_ips
   account_id = var.cloudflare_account_id
-  list_id    = var.list_id
+  list_id    = cloudflare_list.star_wars_list.id
   ip         = each.value.ip_address
   comment    = each.value.comment
 }
