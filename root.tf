@@ -17,13 +17,6 @@ module "dns" {
   cloudflare_account_id = var.cloudflare_account_id
 }
 
-module "firewall_rules" {
-  source                = "./modules/firewall_rules"
-  cloudflare_account_id = var.cloudflare_account_id
-  xyz_zone_id           = var.rustymagnet_zone_id
-  challenged_markets    = local.challenged_markets_str
-}
-
 module "redirects" {
   source        = "./modules/redirects"
   xyz_zone_name = data.cloudflare_zone.website.name

@@ -1,5 +1,5 @@
 resource "cloudflare_ruleset" "my_zone_custom_firewall" {
-  zone_id     = var.xyz_zone_id
+  zone_id     = var.rustymagnet_zone_id
   name        = "my_firewall_rules_inside_ruleset"
   description = "Zone firewall rules"
   kind        = "zone"
@@ -35,7 +35,7 @@ resource "cloudflare_ruleset" "my_zone_custom_firewall" {
     (
         http.request.uri.path contains "/posts/"
         and not any(lower(http.request.headers.names[*])[*] contains "authorization")
-        and not ( ip.geoip.country in { ${var.challenged_markets} } )
+        and not ( ip.geoip.country in { ${local.challenged_markets_str} } )
     )
     EOF
       description = "Challenge requests that don't send authorization header from known country"

@@ -4,14 +4,6 @@ output "account_info" {
   description = "Cloudflare Account Info"
 }
 
-output "challenged_countries_total" {
-  value = length(var.challenged_markets_list)
-}
-
-output "challenged_countries" {
-  value = join(" ", formatlist("country:%s", var.challenged_markets_list))
-}
-
 output "naughty_list_count" {
   value       = "${length(var.countries_to_challenge)} naughty countries"
   description = "Count of countries on the Naughty Map"
@@ -23,12 +15,6 @@ output "southern_european_markets" {
 }
 
 
-
-# firewall_rules module
-
-# output "in_markets" {
-#   value = module.firewall_rules.in_markets
-# }
 
 # access_rules module
 

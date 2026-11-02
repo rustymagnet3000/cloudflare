@@ -11,18 +11,6 @@ variable "rustymagnet_zone_id" {
   default = ""
 }
 
-variable "challenged_markets_list" {
-  type = list(string)
-  default = [
-    "GB",
-    "KP",
-    "PK",
-    "RU",
-    "SO",
-    "SY",
-  ]
-}
-
 
 # env variable: TF_VAR_rm_home_ip_address
 variable "rm_home_ip_address" {
