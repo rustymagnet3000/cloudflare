@@ -1,8 +1,8 @@
 # env variable: TF_VAR_cloudflare_account_id
 variable "cloudflare_account_id" {
-  description = "Cloudflare Account ID"
+  description = "Cloudflare Account ID, read from TF env vars"
   type        = string
-  default     = "Cloudflare Account ID that is read from TF env vars"
+  default     = ""
 }
 
 
