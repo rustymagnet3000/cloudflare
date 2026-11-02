@@ -5,5 +5,5 @@
 
 import {
   to = cloudflare_ruleset.my_zone_custom_firewall
-  id = "${var.rustymagnet_zone_id}/4cc43003171a4515bca43725091c6294"
+  id = "zones/${var.rustymagnet_zone_id}/4cc43003171a4515bca43725091c6294"
 }
