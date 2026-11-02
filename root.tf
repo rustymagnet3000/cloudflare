@@ -5,11 +5,6 @@ module "access_rules" {
   home_ip_address        = var.rm_home_ip_address
 }
 
-module "ddos" {
-  source      = "./modules/ddos"
-  xyz_zone_id = data.cloudflare_zone.website.id
-}
-
 module "dns" {
   source                = "./modules/dns"
   xyz_zone_id           = var.rustymagnet_zone_id
@@ -17,7 +12,3 @@ module "dns" {
   cloudflare_account_id = var.cloudflare_account_id
 }
 
-module "tokens" {
-  source                = "./modules/tokens"
-  cloudflare_account_id = var.cloudflare_account_id
-}
