@@ -1,7 +1,9 @@
 # Temporary: moves transform_rules out of the root state into its own stack.
 #
 # These blocks tell Terraform to forget the resources WITHOUT destroying them.
-# The matching import blocks live in transform_rules/imports.tf.
+# The matching import blocks live in transform_rules/imports.tf. Apply
+# transform_rules/ first, so the rulesets are adopted before the root
+# module lets go of them.
 #
 # Delete this file once `terraform apply` has been run here and in
 # transform_rules/, and both plans report no changes.

@@ -1,7 +1,8 @@
 # Temporary: moves redirects out of the root state into its own stack.
 #
 # Tells Terraform to forget the ruleset WITHOUT destroying it. The matching
-# import block lives in redirects/imports.tf.
+# import block lives in redirects/imports.tf. Apply redirects/ first, so the
+# ruleset is adopted before the root module lets go of it.
 #
 # Delete this file once `terraform apply` has been run here and in
 # redirects/, and both plans report no changes.

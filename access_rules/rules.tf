@@ -17,6 +17,6 @@ resource "cloudflare_access_rule" "home_whitelist" {
 
   configuration = {
     target = "ip"
-    value  = var.home_ip_address
+    value  = var.rm_home_ip_address
   }
 }
