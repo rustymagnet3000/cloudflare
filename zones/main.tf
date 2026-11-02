@@ -12,4 +12,11 @@ resource "cloudflare_zone" "rusty_magnet_xyz" {
   }
   name = "rustymagnet.xyz"
   type = "full"
+
+  # Deleting this zone takes its DNS records with it and cannot be undone.
+  # Terraform will refuse any plan that destroys or replaces it until this
+  # block is removed deliberately.
+  lifecycle {
+    prevent_destroy = true
+  }
 }
