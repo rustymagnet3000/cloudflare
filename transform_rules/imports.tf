@@ -5,5 +5,5 @@
 
 import {
   to = cloudflare_ruleset.add_request_headers
-  id = "zones/${var.rustymagnet_zone_id}/1d69826067ea4cf2b660c6429a6e7eeb"
+  id = "zones/${var.rustymagnet_zone_id}/a031da46449048108babde71c1545f52"
 }
