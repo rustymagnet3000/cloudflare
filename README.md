@@ -4,193 +4,88 @@
 
 A simple way to manage Cloudflare infrastructure with Terraform.
 
-## Table of contents
+Every product area is its own Root Module, in its own directory, with its own
+state file. There is no root module, no child modules and no wiring between
+them. A directory is the unit of everything.
 
-- [Free-tier limitations](#free-tier-limitations)
-- [Authentication and setup](#authentication-and-setup)
-- [State management](#state-management)
-- [Debugging](#debugging)
-- [Pipeline / CI](#pipeline--ci)
+## What a build machine needs
 
-## Free-tier limitations
+Two credentials. That is the whole story.
 
-Many headaches moving Cloudflare infrastructure into Terraform relate to limitations of the `free` zones:
-
-### Limitations of the free Cloudflare tier
-
-| Product | Limitation | Field / expression |
+| Credential | What it is for | Environment variables |
 |---|---|---|
-| Bot Management | Bot Score not available | `cf.bot_management.score` |
-| Bot Management | Verified Bot check not available | `cf.bot_management.verified_bot` |
-| Bot Management | Fingerprint hashes not available | `cf.bot_management.ja4` |
-| Redirects | Limited number with free tier | x 10 |
-| Body Size | Enterprise zone + WAF Advanced required | `http.request.body.size` |
-| WAF Score | Enterprise zone + WAF Advanced required | `cf.waf.score` |
-| Logs | Only available to Enterprise customers | logpush |
-| Lists | Limited number with free tier | x 1 |
-| WAF Custom Rules | Limited number with free tier | 5 |
-| Rate Limits | Not entitled to exclude cached assets | `requests_to_origin = true` |
-| Rate Limits | No custom `counting` without Advanced Rate Limit license | `counting_expression` |
-| Rate Limits | No `log` with free zones | `action = "log"` |
-| Rate Limits | No custom responses with free zones | `please slow down` |
-| DDoS | You can still override DDoS rules with the free tier, but scoped overrides using the `expression` field are not allowed on free zones | — |
-| Snippets | Not available on free zones at all; paid plans only since GA (July 2026). Free zones had 5 per zone during the beta | — |
+| **R2 API token** | reading and writing state | `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_ENDPOINT_URL_S3` |
+| **Cloudflare API token** | changing resources | `CLOUDFLARE_API_TOKEN` |
 
-## Authentication and setup
-
-### Authenticate to Cloudflare
-
-Use a less privileged, short-lived, `API Token` instead of the traditional email and long-lived `API Key`. [Reference](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+Plus the identifiers the configuration needs, which are not secrets:
 
 ```bash
-# required for every request sent to Cloudflare
-# Terraform will pick up the API Token from here
-export CLOUDFLARE_API_TOKEN="< token >"
-
-# The Account ID is used in "Account Level" calls to Cloudflare
-export CLOUDFLARE_ACCOUNT_ID="abcd"
-
-# to pass the Account ID into variables
-export TF_VAR_cloudflare_account_id=$CLOUDFLARE_ACCOUNT_ID
+export TF_VAR_cloudflare_account_id="…"
+export TF_VAR_rustymagnet_zone_id="…"
+export TF_VAR_rm_emails_for_notifications='["…"]'   # notifications only
 ```
 
-## State management
+Any machine holding those can `cd` into any directory and run `terraform init`,
+`plan` and `apply`. There is nothing else to bootstrap: no workspace to select,
+no module to initialise, no ordering between directories.
 
-### Cloudflare child modules, size and speed to "plan"
+## One directory per product
 
-This repo was originally written to have a Root folder and a bunch of Child Modules (firewall rules, redirects, DNS, etc.).  These Child Modules would contain resources.  All resources, from Root of Child Modules would be written into a single State file.  One workflow, one state file. Simple.
+| Directory | State key | Scope | Manages |
+|---|---|---|---|
+| `access_rules` | `access_rules.tfstate` | account | `cloudflare_access_rule` |
+| `bot_management` | `bot_management.tfstate` | zone | `cloudflare_bot_management` |
+| `config_rules` | `config_rules.tfstate` | zone | `cloudflare_ruleset` |
+| `dns` | `dns.tfstate` | account | `cloudflare_workers_custom_domain` |
+| `firewall_rules` | `firewall_rules.tfstate` | zone | `cloudflare_ruleset` |
+| `lists` | `lists.tfstate` | account | `cloudflare_list`, `cloudflare_list_item` |
+| `notifications` | `notifications.tfstate` | account | `cloudflare_notification_policy` |
+| `rate_limits` | `rate_limits.tfstate` | zone | `cloudflare_ruleset` |
+| `redirects` | `redirects.tfstate` | zone | `cloudflare_ruleset` |
+| `transform_rules` | `transform_rules.tfstate` | zone | `cloudflare_ruleset` |
+| `zones` | `zones.tfstate` | zone | `cloudflare_zone`, `cloudflare_zone_setting` |
 
-What happens if Cloudflare resources managed by your Terraform code grow?  And grow?  The `plan` step will get slower and slower.  Now add in Cloudflare;  CF are infamous for "breaking changes".  See the v4 to v5 Terraform provider upgrade helper [notes](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade).  Ouch.  This is where multiple Provider versions and state files are really useful.  You can run different Cloudflare Provider versions.  So you can "test" the latest `Version` in a smaller subset of resources to keep the "breaking changes" to a manageable amount.
+All eleven share one R2 bucket, `rm-terraform`, and differ only by key.
 
-This repo now splits by product.  Each product area is its own Root Module, with its own State file and its own scoped service account token: `bot_management`, `config_rules`, `lists`, `notifications`, `zones` and the Root Module itself.
+## Why it is split this way
 
-Each token's blast radius is limited to one product and rollbacks stay quick.  A broken `list` does not stop you changing a Firewall Rule.
+**Isolated state.** A state file holds one product. Nothing else can be
+corrupted by a bad write, and nothing else has to be read to plan a change.
 
-### Backup state file to Cloudflare R2
+**Quick rollbacks.** Reverting a redirect means reverting one small state file,
+not unpicking one change out of a shared one.
 
-Almost identical to S3 backups.  When the requests get sent during a `terraform init` it actually sends it to: `https://[bucket_name].[account_id].r2.cloudflarestorage.com`
+**One bad rule does not block a different product.** A broken redirect does not
+stop you changing a WAF rule. A `list` that will not apply does not hold up a
+notification policy. Each directory fails on its own.
 
-```text
-# environment variables
-AWS_ACCESS_KEY_ID     - R2 token
-AWS_SECRET_ACCESS_KEY - R2 secret
-AWS_ENDPOINT_URL_S3   - R2 location: https://ACCOUNT_ID.r2.cloudflarestorage.com
+**Scoped tokens are possible.** Because the split follows the API's own
+account/zone boundary, a token can be cut to one product. The table above says
+which scope each needs.
 
-related info: https://github.com/hashicorp/terraform/issues/33847
-```
+**Provider versions can differ.** Cloudflare is not shy about breaking changes
+— the [v4 to v5 upgrade guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade)
+is a long read. A separate `required_providers` per directory means a new
+version can be tried on one product before the rest.
 
-To test the credentials work, type:
+**Plans stay fast.** `plan` reads the state it is given. Eleven small state
+files plan quicker than one large one, and only the directory you touched
+needs planning at all.
 
-```bash
-aws s3api list-buckets --endpoint-url $AWS_ENDPOINT_URL_S3
-```
+### What it used to be
 
-Failed with an error like `Error: failed to get shared config profile`?  You could set `export TF_LOG="DEBUG"` and re-run the `terraform init`.  Better to try and set a local `aws profile`:
+One root folder, a set of child modules, and every resource in a single state
+file. One workflow, one state file, simple — until the resource count grew,
+`plan` slowed down, and a provider upgrade meant moving everything at once.
 
-```bash
-brew install awscli
+## Checks
 
-# set KeyID and Secret Key
-aws configure --profile cf
-AWS Access Key ID [None]: ....xx
-AWS Secret Access Key [None]: ...xx
-Default region name [None]: WEUR
+Three CircleCI jobs run on every push: `terraform fmt -check -recursive`,
+`tflint --recursive`, and `terraform init -backend=false && terraform validate`
+in every directory. None of them need a Cloudflare or R2 credential.
 
-# check aok
-aws configure list --profile cf
-```
+## Further reading
 
-### State file is secret
-
-If you check-in the state file, which is default named `terraform.tfstate`, you have just compromised your Cloudflare authentication credentials. Time to rotate those creds!
-
-### State mismatch
-
-On day 1 you set up Cloudflare and add a bunch of resources.  On day 2 you set up a repo to manage Cloudflare with Terraform.  What happens?  You need to **import** those rules.  Does that matter?  Example:
-
-- Create a `Cloudflare Access Rule` with Terraform
-- Delete the state file
-- `terraform init`
-- `terraform plan` # all looks good
-- `terraform apply`
-
-```text
-Error: failed to create access rule: firewallaccessrules.api.duplicate_of_existing (10009)
-```
-
-The state is out of sync.  To get it back in sync:
-
-```bash
-cf-terraforming import \
-  --resource-type "cloudflare_access_rule" \
-  --token $CF_TOKEN --account $CF_ACCOUNT_ID
-```
-
-Then just make sure you import it to the correct place.  In my case, I needed to `import` the rule into a `module` called `access_rules`:
-
-```bash
-terraform import module.access_rules.cloudflare_access_rule.foobar accounts/yy/xxxx
-```
-
-### Import multiple resources with the same name
-
-```terraform
-resource "cloudflare_access_rule" "challenge_anzac" {
-    ...
-    ...
-variable "countries_naughty_map" {
-  type    = list(string)
-  default = ["AU", "NZ"]
-}
-```
-
-This means any import needs handling with multiple commands:
-
-```bash
-terraform import -state=terraform.tfstate "module.access_rules.cloudflare_access_rule.my_rule[0]" accounts/<account id>/<rule id>
-```
-
-### Test state change
-
-```bash
-# remove state
-terraform state rm -state=terraform.tfstate "module.access_rules.cloudflare_access_rule.my_rule[1]"
-
-# import
-terraform import -state=terraform.tfstate "module.access_rules.cloudflare_access_rule.my_rule[1]" accounts/<account id>/<rule id>
-
-# test it worked
-▶ terraform plan
-No changes. Your infrastructure matches the configuration.
-```
-
-## Debugging
-
-### Debug Cloudflare API requests from Terraform
-
-Almost all issues I experienced related to using the wrong `CLOUDFLARE_API_TOKEN` when making changes via Terraform.  A quick way to see the errors was:
-
-```bash
-# Add the certificate to KeyChain "trust"
-export https_proxy=127.0.0.1:8081 && terraform plan
-```
-
-## Pipeline / CI
-
-### Pipeline checks
-
-```text
-# terraform fmt
-check terraform formatting
-
-# tflint
-Check code for basic mistakes
-
-# terraform init -backend=false
-Init the repo without a full state file sync
-This flushes out issues with Providers
-
-# terraform validate
-Finds issues like " Error: Reference to undeclared resource"
-Quicker feedback rather than waiting for `terraform plan` to complete
-```
+- [Free-tier limitations](docs/free-tier.md) — what the free plan will not let you do, by product
+- [State management](docs/state.md) — the R2 backend, importing existing resources, import ID formats
+- [Troubleshooting](docs/troubleshooting.md) — provider bugs, debugging API calls, running the CI checks locally
