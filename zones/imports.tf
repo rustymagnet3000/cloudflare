@@ -30,19 +30,7 @@ import {
 }
 
 import {
-  for_each = local.zone_settings_string_pairs
-  to       = cloudflare_zone_setting.string_settings[each.key]
+  for_each = local.zone_settings_pairs
+  to       = cloudflare_zone_setting.settings[each.key]
   id       = "${local.zone_ids[each.value.zone]}/${each.value.setting}"
-}
-
-import {
-  for_each = local.zone_settings_number_pairs
-  to       = cloudflare_zone_setting.number_settings[each.key]
-  id       = "${local.zone_ids[each.value.zone]}/${each.value.setting}"
-}
-
-import {
-  for_each = local.zone_ids
-  to       = cloudflare_zone_setting.security_header[each.key]
-  id       = "${each.value}/security_header"
 }
