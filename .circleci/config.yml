@@ -52,13 +52,15 @@ jobs:
       - checkout
       - run: terraform version
       - run:
-          name: Terraform init with no backend
+          name: Terraform init and validate every stack
           command: |
-            terraform init -backend=false -upgrade
-      - run:
-          name: Terraform validate
-          command: |
-            terraform validate
+            fail=0
+            for d in . $(find . -mindepth 1 -maxdepth 1 -type d -not -name '.*' | sort); do
+              ls -1 "$d"/*.tf >/dev/null 2>&1 || continue
+              echo "==> $d"
+              ( cd "$d" && terraform init -backend=false -upgrade && terraform validate ) || fail=1
+            done
+            exit $fail
 workflows:
   format_lint_checks:
     jobs:
