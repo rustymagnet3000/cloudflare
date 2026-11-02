@@ -1,39 +1,9 @@
-# root output
 output "account_info" {
   value       = data.cloudflare_account.rm_account.name
   description = "Cloudflare Account Info"
 }
 
-output "challenged_countries_total" {
-  value = length(var.challenged_markets_list)
-}
-
-output "challenged_countries" {
-  value = join(" ", formatlist("country:%s", var.challenged_markets_list))
-}
-
-output "naughty_list_count" {
-  value       = "${length(var.countries_to_challenge)} naughty countries"
-  description = "Count of countries on the Naughty Map"
-}
-
 output "southern_european_markets" {
   value       = join(" ", local.southern_european_markets)
   description = "Join southern european countries"
-}
-
-
-
-# firewall_rules module
-
-# output "in_markets" {
-#   value = module.firewall_rules.in_markets
-# }
-
-# access_rules module
-
-output "home_ip" {
-  value       = "Home IP to whitelist ${module.access_rules.ar_home_ip_address_to_whitelist}"
-  sensitive   = false
-  description = "Home IP"
 }
