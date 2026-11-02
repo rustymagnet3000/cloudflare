@@ -1,5 +1,5 @@
 resource "cloudflare_ruleset" "add_request_headers" {
-  zone_id     = var.xyz_zone_id
+  zone_id     = var.rustymagnet_zone_id
   name        = "Transform Rule that adds a HTTP Header to a request before it hits server"
   description = "Injects foo-asn foo-ja3 from the Cloudflare request object"
   kind        = "zone"

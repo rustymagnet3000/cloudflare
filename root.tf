@@ -41,7 +41,3 @@ module "tokens" {
   source                = "./modules/tokens"
   cloudflare_account_id = var.cloudflare_account_id
 }
-module "transform_rules" {
-  source      = "./modules/transform_rules"
-  xyz_zone_id = var.rustymagnet_zone_id
-}

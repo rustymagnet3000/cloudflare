@@ -9,8 +9,4 @@ locals {
     "\"GR\"",
     "\"PT\"",
   ]
-  zone_settings = {
-    "security_level" = "medium",
-    "ssl"            = "full",
-  }
 }

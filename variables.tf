@@ -11,14 +11,6 @@ variable "rustymagnet_zone_id" {
   default = ""
 }
 
-# env variable: TF_VAR_email_of_root_cf_user
-variable "email_of_root_cf_user" {
-  description = "Email of Cloudflare interested parties"
-
-  type    = string
-  default = ""
-}
-
 variable "challenged_markets_list" {
   type = list(string)
   default = [
